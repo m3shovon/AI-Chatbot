@@ -15,6 +15,7 @@ class accountparentSerializer(serializers.ModelSerializer):
         model = models.accountparent
         fields = '__all__'
 
+
 class AccountStatusByDateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.accountStatusByDate
@@ -89,7 +90,7 @@ class journalSerilizer(serializers.ModelSerializer):
                     response["type"] = "Credit"
                 else:
                     response["type"] = "Debit"
-        
+
         return response
 
 
@@ -125,51 +126,29 @@ class journalSerilizerwithinvoice(serializers.ModelSerializer):
 
 
 class paymentvoucherSerilizer(serializers.ModelSerializer):
-    payment_methods = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = models.paymentvoucher
         fields = '__all__'
-    def get_payment_methods(self, obj):
-        result = []
-        transections = []
-        journal_items = models.paymentvoucheritems.objects.filter(paymentvoucher=obj)
-        accounts = models.account.objects.all()
-        for item in journal_items:
-            if item.account:
-                for account in accounts:
-                    if account.id == item.account.id:
-                        transections.append({"method": account.name, "amount": item.amount, "is_increase": item.increase})
-        unique_methods = {transection['method'] for transection in transections}
-        
-        for unique_item in unique_methods:
-            amount = 0
-            for transection in transections:
-                
-                if transection["is_increase"] and unique_item == transection["method"]:
-                    amount += transection["amount"]
-                elif transection["is_increase"] == False and unique_item == transection["method"]:
-                    amount -= transection["amount"]
-            result.append({"method": unique_item, "amount": amount})
-        return result
+
     def to_representation(self, instance):
         response = super().to_representation(instance)
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["contact"]:
@@ -239,21 +218,21 @@ class paymentvoucheritemsSerilizer(serializers.ModelSerializer):
             response["Contact"] = contact_response
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["account"]:
@@ -286,53 +265,29 @@ class paymentvoucheritemsSerilizer(serializers.ModelSerializer):
 
 
 class receivevoucherSerilizer(serializers.ModelSerializer):
-    payment_methods = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = models.receivevoucher
         fields = '__all__'
-    
-    def get_payment_methods(self, obj):
-        result = []
-        transections = []
-        journal_items = models.receivevoucheritems.objects.filter(receivevoucher=obj)
-        accounts = models.account.objects.all()
-        for item in journal_items:
-            if item.account:
-                for account in accounts:
-                    if account.id == item.account.id:
-                        transections.append({"method": account.name, "amount": item.amount, "is_increase": item.increase})
-        unique_methods = {transection['method'] for transection in transections}
-        
-        for unique_item in unique_methods:
-            amount = 0
-            for transection in transections:
-                
-                if transection["is_increase"] and unique_item == transection["method"]:
-                    amount += transection["amount"]
-                elif transection["is_increase"] == False and unique_item == transection["method"]:
-                    amount -= transection["amount"]
-            result.append({"method": unique_item, "amount": amount})
-        return result
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["contact"]:
@@ -402,21 +357,21 @@ class receivevoucheritemsSerilizer(serializers.ModelSerializer):
             response["Contact"] = contact_response
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["account"]:
@@ -449,54 +404,29 @@ class receivevoucheritemsSerilizer(serializers.ModelSerializer):
 
 
 class journalvoucherSerilizer(serializers.ModelSerializer):
-    payment_methods = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = models.journalvoucher
         fields = '__all__'
-
-    
-    def get_payment_methods(self, obj):
-        result = []
-        transections = []
-        journal_items = models.journalvoucheritems.objects.filter(journalvoucher=obj)
-        accounts = models.account.objects.all()
-        for item in journal_items:
-            if item.account:
-                for account in accounts:
-                    if account.id == item.account.id:
-                        transections.append({"method": account.name, "amount": item.amount, "is_increase": item.increase})
-        unique_methods = {transection['method'] for transection in transections}
-        
-        for unique_item in unique_methods:
-            amount = 0
-            for transection in transections:
-                
-                if transection["is_increase"] and unique_item == transection["method"]:
-                    amount += transection["amount"]
-                elif transection["is_increase"] == False and unique_item == transection["method"]:
-                    amount -= transection["amount"]
-            result.append({"method": unique_item, "amount": abs(amount)})
-        return result
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["contact"]:
@@ -566,21 +496,21 @@ class journalvoucheritemsSerilizer(serializers.ModelSerializer):
             response["Contact"] = contact_response
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["account"]:
@@ -621,21 +551,21 @@ class contravoucherSerilizer(serializers.ModelSerializer):
         response = super().to_representation(instance)
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
 
         if response["accountFrom"]:
@@ -668,22 +598,21 @@ class pettycashSerilizer(serializers.ModelSerializer):
         response = super().to_representation(instance)
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
-            response["Location_name"] = location_response[0]["name"]
 
         if response["employee"]:
-            employee = contactModel.UserProfile.objects.filter(
+            employee = hrmModel.Employee.objects.filter(
                 id=instance.employee.id)
             employee_response = []
             for i in employee:
                 employee_response.append(
-                    contactSerializer.UserProfileSerializer(i).data)
+                    hrmSerializer.EmployeeSerializer(i).data)
             response["Employee"] = employee_response
             response["Employee_name"] = employee_response[0]["name"]
         return response
@@ -698,14 +627,13 @@ class pettycashTransferSerilizer(serializers.ModelSerializer):
         response = super().to_representation(instance)
 
         if response["location"]:
-            location = productModel.Warehouse.objects.filter(
+            location = hrmModel.Office.objects.filter(
                 id=instance.location.id)
             location_response = []
             for i in location:
                 location_response.append(
-                    productSerializer.warehouseSerilizer(i).data)
+                    hrmSerializer.OfficeSerializer(i).data)
             response["Location"] = location_response
-            response["Location_name"] = location_response[0]["name"]
 
         if response["account"]:
             account = models.account.objects.filter(

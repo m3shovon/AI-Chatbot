@@ -19,7 +19,7 @@ from django.db import connection
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
-    max_page_size = 100000000
+    max_page_size = 1000
     
 
 
@@ -28,15 +28,9 @@ class LogsFilter(django_filters.FilterSet):
         field_name="timestamp", lookup_expr='gte')
     end = django_filters.IsoDateTimeFilter(
         field_name="timestamp", lookup_expr='lte')
-    keyward = django_filters.CharFilter(
-        method='filter_by_keyward', lookup_expr='icontains')
     class Meta:
         model = models.UserLog
-        fields = ['start','end','content_type', 'object_id','user','action_type', 'keyward']
-        
-    def filter_by_keyward(self, queryset, name, value):
-        return queryset.filter(Q(action__icontains=value) | Q(action_data__icontains=value) | Q(user__name__icontains=value)  | Q(user__email__icontains=value))
-    
+        fields = ['start','end','content_type', 'object_id','user']
 
 class LogsViewSet(viewsets.ModelViewSet):
     """Handel creating and updating users"""

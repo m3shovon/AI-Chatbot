@@ -10,49 +10,39 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
-import os
-import django_heroku
 from decouple import config
-
-# Load .env file using:
-from dotenv import load_dotenv
-load_dotenv()
-
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# ==========================================================================for anzara
-# SECRET_KEY = os.environ.get("SECRET_KEY")
-# DEBUG = os.environ.get("DEBUG") == "True"
+# SECRET_KEY = 'django-insecure-&+f(n+akx@$g67pk9imchjfu!bptvbs4$cqc+p44_5gdtr6oqe'
 
-# # ==========================================================================for Azran / ELOR
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', cast = bool)
+# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost:3000','localhost:3001',
-                 '18.138.226.159', 'ecommerce.anzaraltd.com', 'www.ecommerce.anzaraltd.com',
-                 'erp.anzaraltd.com', 'www.erp.anzaraltd.com','https://nodeapi.anzarabd.com',
-                 'erps.anzaraltd.com', 'www.erps.anzaraltd.com',
-                 'www.nodeapi.anzarabd.com','nodeapi.anzarabd.com', 
-                 'www.nodeapi.anzara.com','nodeapi.anzara.com', 
-                 'web-production-459b.up.railway.app', 'https://web-production-459b.up.railway.app',
-                 'azran.up.railway.app', 'https://azran.up.railway.app',
-                 'erp.azranbd.com', 'https://erp.azranbd.com',
-                 'elor.up.railway.app', 'https://azran.up.railway.app',
-                 'erp.elorbd.com', 'https://erp.elorbd.com',
-                 ]
-# 13.214.140.19
+SECRET_KEY = config('THE_SECRET_KEY')
+DEBUG = config('WEB_DEBUG', cast=bool)
+
+
+ALLOWED_HOSTS = ['*']
+
+
+CSRF_TRUSTED_ORIGINS = ['https://web-production-6c80.up.railway.app']
+
+
 # Application definition
 
 INSTALLED_APPS = [
+    # 'jazzmin', 
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,36 +59,37 @@ INSTALLED_APPS = [
     'order',
     'accounting',
     'hrm',
-    'userlog',
     'django_filters',
     'software_settings',
-    'ecommerce',
+    # 'rest_framework_swagger',
     # notifications
     'notifications',
     'notifications_rest',
     # cleanup old files on new uploaded
     'django_cleanup',
     'storages',
-    'image_optimizer',
+    'userlog',
+    # 'defender'
+    'manufacturing',
+    'import_export',
+    # 'sslserver',
 ]
-
 SITE_ID = 1
-OPTIMIZED_IMAGE_METHOD = 'pillow'
-
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # Token Authentication
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
-
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-        'rest_framework.permissions.IsAuthenticated'
+    'DEFAULT_PERMISSION_CLASSES':
+    [
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend'
-    ]
+    'DEFAULT_FILTER_BACKENDS':
+    ['django_filters.rest_framework.DjangoFilterBackend']
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -110,9 +101,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    #  'defender.middleware.FailedLoginMiddleware',
+    # 'contact.middleware.SessionTimeoutMiddleware',
+    'django_auto_logout.middleware.auto_logout',
 ]
 
 ROOT_URLCONF = 'inventoryAPI.urls'
+
+# CSRF_TRUSTED_ORIGINS = ['https://api.meherbysara.com', 'https://190.92.218.80']
+# SECURE_SSL_HOST = 'api.meherbysara.com'
+# SECURE_SSL_REDIRECT = True
 
 TEMPLATES = [
     {
@@ -125,6 +123,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_auto_logout.context_processors.auto_logout_client',
             ],
         },
     },
@@ -132,25 +131,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'inventoryAPI.wsgi.application'
 
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-
-
-# sudo docker exec 0edbb149194a /usr/bin/mysqldump -u anzara --password=email@anzara anzara > backup.sql
-# sed 's/\sDEFINER=`[^`]*`@`[^`]*`//g' -i *.sql
-
-# ============================================================================for anzara
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.environ.get("DATABASE_NAME"),
-#         'HOST': os.environ.get("DATABASE_HOST"),
-#         'PORT': os.environ.get("DATABASE_PORT"),
-#         'USER': os.environ.get("DATABASE_USER"),
-#         'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
-# # ============================================================================for Azran / ELOR
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -162,24 +153,28 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
+# Internationalization
+# https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -191,6 +186,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -198,10 +195,11 @@ AUTH_USER_MODEL = 'contact.UserProfile'
 
 # added by the admin
 
-
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/django_static/'
 STATIC_ROOT = BASE_DIR / 'django_static'
@@ -210,68 +208,57 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# # django_heroku.settings(locals())
+# # mail varification configuration start
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# MAILER_EMAIL_BACKEND = EMAIL_BACKEND
+# EMAIL_HOST = 'mail.anzaraclothing.com'
+# EMAIL_HOST_USER = 'test@anzaraclothing.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 465
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# # mail varification configuration end
 
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
-MAILER_EMAIL_BACKEND = EMAIL_BACKEND
-EMAIL_HOST = 'mail.anzaraclothing.com'
-EMAIL_HOST_USER = 'porotest@anzaraclothing.comm'
-EMAIL_HOST_PASSWORD = 'retest@anzara111'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# # SMS configuration start
+SMS_ENABLED = False  # to use for sending sms
+# SMS_HOST_URL = 'https://smpp.ajuratech.com:7790/sendtext'
+# SMS_SECRET_KEY = ''
+# SMS_API_KEY = ''
+# SMS_API_SENDER_ID = 'ANZARA'
+# SMS_CHANNEL = 'Normal'
+# SMS_DCS = '0'
+# SMS_FLASH = '0'
+# # SMS configuration end
 
+# # S3 BUCKETS CONFIG start
 
-# SMS configuration start
-# http://smpp.revesms.com:7788/sendtext
-# ============================================================================for anzara
-# SMS_ENABLED = os.environ.get("SMS_ENABLED") == "True"  # to use for sending sms
-# SMS_HOST_URL = 'http://smpp.revesms.com:7788/sendtext'
-# SMS_SECRET_KEY = os.environ.get("SMS_SECRET_KEY"),
-# SMS_API_KEY = os.environ.get("SMS_API_KEY"),
-# SMS_API_SENDER_ID = os.environ.get("SMS_API_SENDER_ID"),
-# SMS_CHANNEL = os.environ.get("SMS_CHANNEL"),
-# SMS_DCS = os.environ.get("SMS_DCS"), 
-# SMS_FLASH = os.environ.get("SMS_FLASH"),
-# ============================================================================for Azran / ELOR
-SMS_ENABLED = config('SMS_ENABLED', cast = bool)  # to use for sending sms
-SMS_HOST_URL = config('SMS_HOST_URL'),
-SMS_SECRET_KEY = config('SMS_SECRET_KEY'),
-SMS_API_KEY = config('SMS_API_KEY'),
-SMS_API_SENDER_ID = config('SMS_API_SENDER_ID'),
-SMS_CHANNEL = config('SMS_CHANNEL'),
-SMS_DCS = config('SMS_DCS'),  
-SMS_FLASH = config('SMS_FLASH'),
-# SMS configuration end
-
-
-# S3 BUCKETS CONFIG start
-# ============================================================================for Anzara
-# AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-# AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-# AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
+# AWS_ACCESS_KEY_ID = 'AKIAVLCNKA47XYFXVSHAADDAW'
+# AWS_SECRET_ACCESS_KEY = 'edawdawd7hym2pFsDi8ofhPx6ih2GAg0W/KouhIl6wUhwwr'
+# AWS_STORAGE_BUCKET_NAME = 'anzara'
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
-# DEFAULT_FILE_STORAGE = os.environ.get("DEFAULT_FILE_STORAGE")
-# STATICFILES_STORAGE = os.environ.get("STATICFILES_STORAGE")
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# # ============================================================================for Azran / ELOR
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+# # S3 BUCKETS CONFIG end
+
+AWS_ACCESS_KEY_ID = 'AKIAUHXSE3PCCFKMVP7I'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'meherbysara'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'ap-southeast-1'
+
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
+
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = config("DEFAULT_FILE_STORAGE")
-STATICFILES_STORAGE = config("STATICFILES_STORAGE")
-# S3 BUCKETS CONFIG end
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Accounting Codes Start
 CASH = 100040
@@ -297,7 +284,174 @@ EMPLOYEE_ADVANCE = 100010009
 SALES_VAT = 400010019
 # Accounting Codes End
 
-BKASH_TRANSFER_ACCOUNT = 1031100052895
+BKASH_TRANSFER_ACCOUNT = 403811100000200
+
+AUTO_LOGOUT = {
+    'IDLE_TIME': timedelta(minutes=720),
+    #  'SESSION_TIME': timedelta(minutes=1),
+    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    'MESSAGE': 'The session has expired. Please login again to continue.',
+}
 
 
-# CELERY_BROKER_URL = "redis://localhost:6379/1"
+# HUAWEI_ACCESS_KEY_ID = 'GKMXDGXJY6D7J8CB9YIL'
+# HUAWEI_SECRET_ACCESS_KEY = 'imeZg8LaVowmJThAwbukYoTEgaZjdKqJ9eKZH5zz'
+# HUAWEI_STORAGE_BUCKET_NAME = 'meher-obs'
+# HUAWEI_OSS_REGION_NAME = 'AP-Singapore'
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,  # Set to False to have normal sized text on small screens.
+    "footer_small_text": False,  # Set to False to have normal sized text on small screens.
+    "body_small_text": False,  # Set to False to have normal sized text on small screens.
+    "brand_small_text": False,  # Set to False to have normal sized text on small screens.
+    # "dark_mode_theme": True,  # Enables dark mode.
+    # "themes": ["default", "dark"],  # Optionally enable additional themes.
+    # "theme": "dark",  # Optionally set the default theme.
+}
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Cotton Club",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Cotton Club",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Cotton Club",
+
+    # Logo to use for your site, must be present in static files, used for brand on top left
+    # "site_logo": "assets/images/admin.jpg",
+
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": None,
+
+    # Logo to use for login form in dark themes (defaults to login_logo)
+    "login_logo_dark": None,
+
+    # CSS classes that are applied to the logo above
+    "site_logo_classes": "img-circle",
+
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": None,
+
+    # Welcome text on the login screen
+    "welcome_sign": "Welcome to Cotton Club Admin Panel",
+
+    # Copyright on the footer
+    "copyright": "M3S",
+
+    # List of model admins to search from the search bar, search bar omitted if excluded
+    # If you want to use a single search field you dont need to use a list, you can use a simple string 
+    "search_model": ["auth.User", "auth.Group"],
+
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
+    "user_avatar": None,
+
+    ############
+    # Top Menu #
+    ############
+
+    # Links to put along the top menu
+    "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # external url that opens in a new window (Permissions can be added)
+        # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+
+        # model admin to link to (Permissions checked against model)
+        {"model": "auth.User"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "product"},
+        {"app": "order"},
+        {"app": "accounting"},
+    ],
+
+    #############
+    # User Menu #
+    #############
+
+    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [
+        {"name": "Support", "url": "https://theicthub.com", "new_window": True},
+        {"model": "auth.user"}
+    ],
+
+    #############
+    # Side Menu #
+    #############
+
+    # Whether to display the side menu
+    "show_sidebar": True,
+
+    # Whether to aut expand the menu
+    "navigation_expanded": True,
+
+    # Hide these apps when generating side menu e.g (auth)
+    "hide_apps": [],
+
+    # Hide these models when generating side menu (e.g auth.user)
+    "hide_models": [],
+
+    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+
+    # Custom links to append to app groups, keyed on app name
+    "custom_links": {
+        "books": [{
+            "name": "Make Messages", 
+            "url": "make_messages", 
+            "icon": "fas fa-comments",
+            # "permissions": ["books.view_book"]
+        }]
+    },
+
+    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # for the full list of 5.13.0 free icon classes
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    # Icons that are used when one is not manually specified
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    "related_modal_active": False,
+
+    #############
+    # UI Tweaks #
+    #############
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    "custom_css": None,
+    "custom_js": None,
+    # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
+    "use_google_fonts_cdn": True,
+    # Whether to show the UI customizer on the sidebar
+    "show_ui_builder": False,
+
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    # Add a language dropdown into the admin
+    # "language_chooser": True,
+}
+
+
+
+

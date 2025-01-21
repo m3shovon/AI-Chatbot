@@ -10,6 +10,7 @@ def is_relevant_app(sender):
     return app_label in ["order", "product"]
 
 
+
 def get_request():
     for frame_record in inspect.stack():
         if frame_record[3] == 'get_response':
@@ -97,12 +98,14 @@ def log_object_deletion(sender, instance, **kwargs):
                 action_type=action_type,
                 content_type=content_type,
                 object_id=instance.pk,
-                )
+            )
+
+
 
 # @receiver(pre_save)
 # def log_object_changes(sender, instance, **kwargs):
     
-#     if sender.___name___ != "UserLog" and sender.___name___ != "Session" and sender.___name___ != "Token":
+#     if sender.__name__ != "UserLog" and sender.__name__ != "Session" and sender.__name__ != "Token":
 #         import inspect
 #         request = ""
 #         for frame_record in inspect.stack():
@@ -116,12 +119,17 @@ def log_object_deletion(sender, instance, **kwargs):
 #         if not instance.pk:
 #             return
 
-#         original_instance = sender.objects.get(pk=instance.pk)
+#         # original_instance = sender.objects.get(pk=instance.pk)
+#         ### updated for manufacure
+#         try:
+#             original_instance = sender.objects.get(pk=instance.pk)
+#         except sender.DoesNotExist:
+#             original_instance = None
 #         changes = []
 #         action_data = {}
 #         for field in instance._meta.fields:
 #             field_name = field.name
-#             original_value = getattr(original_instance, field_name)
+#             original_value = getattr(original_instance, field_name)  if original_instance else None ### updated for manufacure
 #             new_value = getattr(instance, field_name)
 #             if original_value != new_value:
 #                 changes.append(f"{field_name}: {original_value} -> {new_value}")
@@ -129,7 +137,7 @@ def log_object_deletion(sender, instance, **kwargs):
         
 #         if changes:
 #             action_type="update"
-#             action = f'Updated {sender.___name___} {instance} ({", ".join(changes)})'
+#             action = f'Updated {sender.__name__} {instance} ({", ".join(changes)})'
 #             content_type = ContentType.objects.get_for_model(sender)
 #             if request and request.user.is_authenticated:
 #                 UserLog.objects.create(
@@ -144,7 +152,7 @@ def log_object_deletion(sender, instance, **kwargs):
 
 # @receiver(post_save)
 # def log_object_creation_update(sender, instance, created, **kwargs):
-#     if sender.___name___ != "UserLog" and sender.___name___ != "Session" and sender.___name___ != "Token":
+#     if sender.__name__ != "UserLog" and sender.__name__ != "Session" and sender.__name__ != "Token":
 #         import inspect
 #         request=""
 #         for frame_record in inspect.stack():
@@ -155,7 +163,8 @@ def log_object_deletion(sender, instance, **kwargs):
 #             request = None
 
 #         if created:
-#             action = f'Created {sender.___name___} {instance}'
+#             action = f'Created {sender.__name__} {instance}'
+#             # original_instance = sender.objects.get(pk=instance.pk)
 #             action_type="create"
 #             action_data = {}
 #             for field in instance._meta.fields:
@@ -163,7 +172,19 @@ def log_object_deletion(sender, instance, **kwargs):
 #                 new_value = getattr(instance, field_name)
 #                 if new_value is not None:
 #                     action_data[field_name] = f"{new_value}"
+#             # print(original_instance)
             
+#         # else:
+#         #     original_instance = sender.objects.get(pk=instance.pk)
+#         #     changes = []
+#         #     for field in instance._meta.fields:
+#         #         field_name = field.name
+#         #         original_value = getattr(original_instance, field_name)
+#         #         new_value = getattr(instance, field_name)
+#         #         if original_value != new_value:
+#         #             changes.append(f"{field_name}: {original_value} -> {new_value}")
+#         #     action = f'Updated {sender.__name__} {instance} ({", ".join(changes)})'
+    
 #             content_type = ContentType.objects.get_for_model(sender)
 
 #             if request and request.user.is_authenticated:
@@ -180,7 +201,8 @@ def log_object_deletion(sender, instance, **kwargs):
 
 # @receiver(post_delete)
 # def log_object_deletion(sender, instance, **kwargs):
-#     if sender.___name___ != "UserLog" or sender.___name___ != "Session" and sender.___name___ != "Token":
+#     if sender.__name__ != "UserLog" or sender.__name__ != "Session" and sender.__name__ != "Token":
+#         # print("---------------------------------------------------------------------")
 #         import inspect 
 #         request=""
 #         for frame_record in inspect.stack():
@@ -191,10 +213,13 @@ def log_object_deletion(sender, instance, **kwargs):
 #             request = None
 #         content_type = ContentType.objects.get_for_model(sender)
 #         action_type="delete"
-#         if request is not None and sender.___name___ != "Session":
+#         # print(instance)
+#         # print(content_type)
+#         # print(sender.__name__)
+#         if request is not None and sender.__name__ != "Session":
 #             UserLog.objects.create(
 #                 user=request.user,
-#                 action=f'Deleted {sender.___name___} {instance}',
+#                 action=f'Deleted {sender.__name__} {instance}',
 #                 action_type=action_type,
 #                 content_type=content_type,
 #                 object_id=instance.pk,

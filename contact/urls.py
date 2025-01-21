@@ -6,16 +6,7 @@ import notifications_rest.urls
 
 router = DefaultRouter()
 router.register('user', views.UserProfileViewSet)
-router.register('employee', views.EmployeeViewSet)
-router.register('employee-profile', views.EmployeeProfileViewSet)
-router.register('employee-document', views.EmployeeDocumentViewSet)
-
-router.register('user-role', views.userRoleViewSet)
-router.register('role_permission', views.role_permissionViewSet)
-router.register('department', views.DepartmentViewSet)
-
 router.register('contact', views.ContactView)
-router.register('contactP', views.ContactViewP)
 router.register('contacttype', views.ContactTypeViewSet)
 router.register('log', views.UserLog)
 
@@ -25,4 +16,5 @@ urlpatterns = [
     path('inbox/notifications/',
          include(notifications.urls, namespace='notifications')),
     path('notifications/', include(notifications_rest.urls)),
+    # path('reset-session-timeout/', views.reset_session_timeout, name='reset-session-timeout'),
 ]

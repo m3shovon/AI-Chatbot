@@ -9,4 +9,3 @@ class UserlogFilter(admin.ModelAdmin):
     search_fields = ('user__email', 'timestamp', 'object_id', 'content_type__model', 'action')
 
 admin.site.register(models.UserLog,UserlogFilter)
-

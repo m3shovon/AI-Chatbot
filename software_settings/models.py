@@ -34,7 +34,6 @@ class sub_module(models.Model):
     name = models.CharField(max_length=255, unique=True)
     module = models.ForeignKey(
         module, on_delete=models.CASCADE, default=None, blank=True, null=True)
-    permission = models.TextField(null=True, blank=True)
 
     def __str__(self):
         """return string representation of our user"""

@@ -7,5 +7,3 @@ class AccountingConfig(AppConfig):
 
     def ready(self):
         import accounting.signals
-
-    

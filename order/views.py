@@ -1,3 +1,4 @@
+from keyword import kwlist
 from operator import contains
 from django.shortcuts import render
 from django.db.models import Count, Sum
@@ -12,8 +13,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 import django_filters
 from django.db.models import Q
-from django.conf import settings
-
 from order import serializers, models
 from django.contrib.admin.models import LogEntry
 from rest_framework.pagination import PageNumberPagination
@@ -21,6 +20,8 @@ from decimal import Decimal
 import json
 import datetime
 import pytz
+from rest_framework.permissions import AllowAny
+from django.shortcuts import get_object_or_404
 
 
 from product import models as productModel
@@ -28,15 +29,13 @@ from order import models as orderModel
 from contact import models as contactModel
 from accounting import models as accountingModel
 
-
-
 # Create your views here.
 
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 100
     page_size_query_param = 'page_size'
-    max_page_size = 100000000
+    max_page_size = 10000000
 
 
 class CuponFilter(django_filters.FilterSet):
@@ -54,21 +53,8 @@ class CuponViewSet(viewsets.ModelViewSet):
     filter_class = CuponFilter
 
 
-class IPNFilter(django_filters.FilterSet):
-    class Meta:
-        model = models.IPN
-        fields = ['tran_id']
-        
-class IPNViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoice Items"""
-    serializer_class = serializers.IPNserializers
-    queryset = models.IPN.objects.all().order_by('-id')
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = [DjangoFilterBackend]
-    filter_class = IPNFilter
-
 class InvoiceItemFilter(django_filters.FilterSet):
-    
+
     start = django_filters.IsoDateTimeFilter(
         field_name="issue_date", lookup_expr='gte')
     end = django_filters.IsoDateTimeFilter(
@@ -78,10 +64,11 @@ class InvoiceItemFilter(django_filters.FilterSet):
 
     class Meta:
         model = models.invoice_item
-        fields = ['invoice__id','start', 'end', 'invoice__location__id', 'keyward']
-    
+        fields = ['invoice__id', 'start', 'end', 'invoice__invoice_number',
+                  'invoice__location__id', 'keyward','invoice__is_public']
+
     def filter_by_keyward(self, queryset, name, value):
-        return queryset.filter(Q(invoice__invoice_number__contains=value) | Q(invoice__order_number__contains=value) | Q(invoice__contact__name__contains=value) | Q(product__barcode__contains=value) | Q(Details__contains=value) )
+        return queryset.filter(Q(invoice__invoice_number__contains=value) | Q(invoice__order_number__contains=value) | Q(invoice__contact__name__contains=value) | Q(product__barcode__contains=value) | Q(Details__contains=value))
 
 
 
@@ -105,6 +92,23 @@ class InvoiceItemViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         self.serializer_class = serializers.InvoiceItemReadserializers
         return super().retrieve(request, *args, **kwargs)
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        invoice_item_copy = models.invoice_item_copy.objects.filter(
+            invoice=instance.invoice,
+            product=instance.product,
+            Details=instance.Details,
+            quantity=instance.quantity,
+            price=instance.price,
+            purchase_price=instance.purchase_price
+        ).first()
+        if invoice_item_copy:
+            invoice_item_copy.is_exchanged = True
+            invoice_item_copy.save()
+        self.perform_destroy(instance)
+        return Response({"message": "Invoice item deleted and corresponding copy marked as exchanged."}, status=204)
+
 
 
 class SoldProductsViewSet(viewsets.ModelViewSet):
@@ -114,7 +118,7 @@ class SoldProductsViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filter_backends = [DjangoFilterBackend]
     filter_class = InvoiceItemFilter
-    
+
     def list(self, request, *args, **kwargs):
         self.serializer_class = serializers.InvoiceItemSOldReadserializers
         return super().list(request, *args, **kwargs)
@@ -130,14 +134,14 @@ class MeasurementViewSet(viewsets.ModelViewSet):
     queryset = models.measurement.objects.all().order_by('-id')
     authentication_classes = (TokenAuthentication,)
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ('id', 'invoice__id', 'contact__id','is_basic')
-    
+    filterset_fields = ('id', 'invoice__id', 'contact__id', 'is_basic')
+
     # def create(self, request, *args, **kwargs):
     #     is_basic = request.data.get("is_basic")
     #     contact = request.data.get("contact")
     #     invoice = request.data.get("invoice")
     #     product = request.data.get("invoice")
-        
+
     #     if is_basic == "" or is_basic == None or is_basic == "None":
     #         invoice_object = models.invoice.objects.get(id=invoice)
     #         new_measurement, created = models.measurement.objects.get_or_create(
@@ -172,44 +176,28 @@ class InvoiceFilter(django_filters.FilterSet):
         field_name="issue_date", lookup_expr='gte')
     end = django_filters.IsoDateTimeFilter(
         field_name="issue_date", lookup_expr='lte')
-    deliverystart = django_filters.IsoDateTimeFilter(
-        field_name="delivery_date", lookup_expr='gte')
-    deliveryend = django_filters.IsoDateTimeFilter(
-        field_name="delivery_date", lookup_expr='lte')
     keyward = django_filters.CharFilter(
         method='filter_by_keyward', lookup_expr='icontains')
     month = django_filters.NumberFilter(
         method='filter_by_month', lookup_expr='month')
     year = django_filters.NumberFilter(
         method='filter_by_year', lookup_expr='year')
-    has_due = django_filters.BooleanFilter(
-        method='filter_by_due', lookup_expr='icontains')
-    refundable = django_filters.BooleanFilter(
-        method='filter_by_refundable', lookup_expr='icontains')
     contains_item = django_filters.BooleanFilter(method='filter_by_item')
 
     class Meta:
         model = models.invoice
         fields = ['start', 'end',
-                  'invoice_number', 'delivery_date', 'Payment_method','deliverystart','deliveryend',
+                  'invoice_number', 'delivery_date', 'Payment_method',
                   'status', 'contact', 'location', 'account', 'keyward',
-                  'month', 'year', 'contains_item', 'contact__ecommerce_id','has_due', 'Sales_person','refundable','is_refunded','is_mute','id']
+                  'month', 'year', 'contains_item', 'is_public' ]
 
     def filter_by_keyward(self, queryset, name, value):
-        return queryset.filter(Q(invoice_number__contains=value) | Q(order_number__contains=value) | Q(status__icontains=value) | Q(contact__name__icontains=value) | Q(contact__phone__icontains=value) | Q(contact__ecommerce_id__icontains=value) | Q(remarks__icontains=value))
-
+        return queryset.filter(Q(invoice_number__contains=value) | Q(order_number__contains=value) | Q(status__icontains=value) | Q(remarks__icontains=value) | Q(contact__phone__icontains=value))
+ 
     def filter_by_month(self, queryset, name, value):
         return queryset.filter(
             Q(issue_date__month=value) | Q(issue_date__month=value)
         )
-        
-    def filter_by_due(self, queryset, name, value):
-        if value:
-            return queryset.filter(due__gt=0)
-    
-    def filter_by_refundable(self, queryset, name, value):
-        if value:
-            return queryset.filter(advance_payment__gt=0)
 
     def filter_by_year(self, queryset, name, value):
         return queryset.filter(
@@ -242,7 +230,7 @@ class InvoiceVATFilter(django_filters.FilterSet):
         fields = ['start', 'end',
                   'invoice_number', 'delivery_date', 'Payment_method',
                   'status', 'contact', 'location', 'account', 'keyward',
-                  'month', 'year', 'contains_item', ]
+                  'month', 'year', 'contains_item','is_public' ]
 
     def filter_by_keyward(self, queryset, name, value):
         return queryset.filter(Q(invoice_number__contains=value) | Q(order_number__contains=value) | Q(status__contains=value))
@@ -274,7 +262,7 @@ class InvoiceFilterByDeliveryDate(django_filters.FilterSet):
     class Meta:
         model = models.invoice
         fields = ['start', 'end',
-                  'invoice_number', 'delivery_date', 'Payment_method', 'status', 'contact', 'location', 'account', 'DeliveryType']
+                  'invoice_number', 'delivery_date', 'Payment_method', 'status', 'contact', 'location', 'account', 'DeliveryType','is_public']
 
 
 class ServiceFilter(django_filters.FilterSet):
@@ -283,16 +271,12 @@ class ServiceFilter(django_filters.FilterSet):
         field_name="issue_date", lookup_expr='gte')
     end = django_filters.IsoDateTimeFilter(
         field_name="issue_date", lookup_expr='lte')
-    deliverystart = django_filters.IsoDateTimeFilter(
-        field_name="invoice__delivery_date", lookup_expr='gte')
-    deliveryend = django_filters.IsoDateTimeFilter(
-        field_name="invoice__delivery_date", lookup_expr='lte')
     keyward = django_filters.CharFilter(
         method='filter_by_keyward', lookup_expr='icontains')
 
     class Meta:
         model = models.services
-        fields = ['start', 'end',  'invoice__id', 'keyward', 'employe__id', 'realter','status','deliverystart','deliveryend']
+        fields = ['start', 'end',  'invoice__id', 'keyward', 'employe__id','invoice__is_public',]
 
     def filter_by_keyward(self, queryset, name, value):
         return queryset.filter(Q(invoice__invoice_number__contains=value) | Q(details__contains=value) | Q(invoice__contact__name__contains=value) | Q(invoice__order_number__contains=value) | Q(invoice__remarks__contains=value))
@@ -332,6 +316,8 @@ class InvoiceViewSetP(viewsets.ModelViewSet):
 
         response.data['total_discount'] = queryset.aggregate(Sum('discount'))[
             'discount__sum']
+        response.data['total_additional_discount'] = queryset.aggregate(Sum('additional_discount'))[
+            'additional_discount__sum']
         response.data['total_sales'] = queryset.aggregate(Sum('bill'))[
             'bill__sum']
         response.data['total_payment'] = queryset.aggregate(Sum('payment'))[
@@ -343,6 +329,8 @@ class InvoiceViewSetP(viewsets.ModelViewSet):
 
         response.data['current_page_discount'] = sum(
             [Decimal(data.get('discount', 0)) for data in response.data['results']])
+        response.data['current_page_additional_discount'] = sum(
+            [Decimal(data.get('additional_discount', 0)) for data in response.data['results']])
         response.data['current_page_sales'] = sum(
             [Decimal(data.get('bill', 0)) for data in response.data['results']])
         response.data['current_page_payment'] = sum(
@@ -359,103 +347,6 @@ class InvoiceViewSetP(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         self.serializer_class = serializers.InvoiceReadserializers
         return super().retrieve(request, *args, **kwargs)
-
-class AllOnlineOrderFilter(django_filters.FilterSet):
-    class Meta:
-        model = models.online_order
-        fields = ['invoice_number',]
-
-class AllOnlineOrderViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoices"""
-    serializer_class = serializers.AllOnlineOrderserializers
-    queryset = models.online_order.objects.all().order_by('-id')
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = [DjangoFilterBackend]
-    filter_class = AllOnlineOrderFilter
-    
-    def create(self, request, *args, **kwargs):
-        selectedDeliveryMethod = request.data["selectedDeliveryMethod"] 
-        shipping_method = request.data["shipping_method"]
-        bill = request.data["bill"]
-        due = request.data["due"]
-        delivery_charge = request.data["delivery_charge"] 
-        tax = request.data["tax"] 
-        discount = request.data["discount"] 
-        discountlimit = request.data["discountlimit"]
-        cupon = request.data["cupon"]
-        quantity = request.data["quantity"] 
-        Type = request.data["Type"] 
-        ecommerce_id = request.data["ecommerce_id"]
-        data = request.data["data"] 
-        name = request.data["name"]
-        contact = request.data["contact"] 
-        location = request.data["location"]
-        account = request.data["account"]
-        delivery_date = request.data["delivery_date"] 
-        invoice_number = request.data["invoice_number"] 
-        products = request.data["products"]
-        costing = 0
-        
-        address1 = ""
-        if request.data.get("address1"):
-            address1 = request.data["address1"]
-            shipping_address = str(address1)
-        address2 = ""
-        if request.data.get("address2"):
-            address2 = request.data["address2"]
-            shipping_address += " " + str(address2)
-        thana = ""
-        if request.data.get("thana"):
-            thana = request.data["thana"]
-            shipping_address += ", " + str(thana)
-        district = ""
-        if request.data.get("district"):
-            district = request.data["district"]
-            shipping_address += ", " + str(district)
-        country = ""
-        if request.data.get("country"):
-            country = request.data["country"]
-            shipping_address += ", " + str(country)
-        postalCode =""
-        if request.data.get("postalCode"):
-            postalCode = request.data["postalCode"]
-            shipping_address += " " + str(postalCode)
-        
-        s_phone = ""
-        if request.data.get("s_phone"):
-            s_phone = request.data["s_phone"] 
-        data = {
-            "selectedDeliveryMethod": selectedDeliveryMethod,
-            "shipping_method": shipping_method,
-            "bill": bill,
-            "due": due,
-            "delivery_charge": delivery_charge,
-            "tax": tax,
-            "discount": discount,
-            "discountlimit": discountlimit,
-            "cupon": cupon,
-            "quantity": quantity,
-            "Type": Type,
-            "ecommerce_id": ecommerce_id,
-            "data": data,
-            "name": name,
-            "contact": contact,
-            "location": location,
-            "account": account,
-            "delivery_date": delivery_date,
-            "invoice_number": invoice_number,
-            "products": products,
-            "address1": address1,
-            "address2": address2,
-            "thana": thana,
-            "district": district,
-            "country": country,
-            "postalCode": postalCode,
-            "shipping_address": shipping_address,
-            "s_phone": s_phone,
-        }
-        onlineorder = models.online_order.objects.create(data=data, confirm=False, invoice_number=invoice_number)
-        return Response({"status": "success", "id": onlineorder.id})
 
 
 class InvoiceClientViewSet(viewsets.ModelViewSet):
@@ -520,13 +411,6 @@ class InvoiceVatViewSet(viewsets.ModelViewSet):
         response = {'message': 'Delete function is not offered in this path.'}
         return Response(response, status=status.HTTP_403_FORBIDDEN)
 
-class SalesPersonViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoices"""
-    serializer_class = serializers.SalesPersonSerializers
-    queryset = models.invoice.objects.all().order_by('-id')
-    filter_backends = [DjangoFilterBackend]
-    filter_class = InvoiceFilter
-
 
 class InvoiceExcelViewSet(viewsets.ModelViewSet):
     """Handel creating and updating Invoices"""
@@ -540,6 +424,7 @@ class InvoiceExcelViewSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         return response
 
+
 class OurObject:
     def __init__(self, /, **kwargs):
         self.__dict__.update(kwargs)
@@ -551,8 +436,8 @@ class OurObject:
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
-    
-    
+
+
 class OnlineOrderViewSet(viewsets.ModelViewSet):
     """Handel creating and updating Invoices"""
     serializer_class = serializers.Invoiceserializers
@@ -560,191 +445,125 @@ class OnlineOrderViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     # filter_backends = [DjangoFilterBackend]
     # filter_class = InvoiceFilter
-    
+
     def create(self, request, *args, **kwargs):
-        selectedDeliveryMethod = request.data["selectedDeliveryMethod"] 
+
+        selectedDeliveryMethod = request.data["selectedDeliveryMethod"]
         shipping_method = request.data["shipping_method"]
         bill = request.data["bill"]
-        due = request.data["due"]
-        delivery_charge = request.data["delivery_charge"] 
-        tax = request.data["tax"] 
-        discount = request.data["discount"] 
+        delivery_charge = request.data["delivery_charge"]
+        tax = request.data["tax"]
+        discount = request.data["discount"]
         discountlimit = request.data["discountlimit"]
         cupon = request.data["cupon"]
-        quantity = request.data["quantity"] 
-        Type = request.data["Type"] 
+        quantity = request.data["quantity"]
+        Type = request.data["Type"]
         ecommerce_id = request.data["ecommerce_id"]
-        data = request.data["data"] 
+        data = request.data["data"]
         name = request.data["name"]
-        contact = request.data["contact"] 
+        contact = request.data["contact"]
         location = request.data["location"]
         account = request.data["account"]
-        delivery_date = request.data["delivery_date"] 
-        invoice_number = request.data["invoice_number"] 
+        delivery_date = request.data["delivery_date"]
+        invoice_number = request.data["invoice_number"]
         products = request.data["products"]
-        costing = 0
-        
-        address1 = ""
-        if request.data.get("address1"):
-            address1 = request.data["address1"]
-            shipping_address = str(address1)
-        address2 = ""
-        if request.data.get("address2"):
-            address2 = request.data["address2"]
-            shipping_address += " " + str(address2)
-        thana = ""
-        if request.data.get("thana"):
-            thana = request.data["thana"]
-            shipping_address += ", " + str(thana)
-        district = ""
-        if request.data.get("district"):
-            district = request.data["district"]
-            shipping_address += ", " + str(district)
-        country = ""
-        if request.data.get("country"):
-            country = request.data["country"]
-            shipping_address += ", " + str(country)
-        postalCode =""
-        if request.data.get("postalCode"):
-            postalCode = request.data["postalCode"]
-            shipping_address += " " + str(postalCode)
-        
-        s_phone = ""
-        if request.data.get("s_phone"):
-            s_phone = request.data["s_phone"] 
-        
-        
+
         redFlag = 0
         cuonFlag = 0
         message = "Successfully updated"
         for product in request.data["products"]:
             item = productModel.ProductLocation.objects.get(id=product["id"])
-            costing += float(product["quantity"]) * float(item.purchase_price)
             if product["quantity"] > item.quantity:
-               redFlag = 1
-               message = str(item.ProductDetails.title) + " is not available"
-        
+                redFlag = 1
+                message = str(item.ProductDetails.title) + " is not available"
+
         current_datetime = str(datetime.datetime.now()) + "+00:00"
         dt = datetime.datetime.fromisoformat(current_datetime)
-        
+
         if cupon:
             currentCupon = orderModel.cupon.objects.get(pk=cupon)
-            if currentCupon.start <= dt <= currentCupon.end  and currentCupon.status == "Active":
+            if currentCupon.start <= dt <= currentCupon.end and currentCupon.status == "Active":
                 if currentCupon.limit_type == "limited":
                     currentCupon.limit = currentCupon.limit - 1
                     # currentCupon.save()
             else:
                 cuonFlag = 1
                 message = "Cupon is not valid"
-            
-        
+
         if redFlag == 0 and cuonFlag == 0:
             contactobj = contactModel.contact.objects.get(pk=contact)
             locationobj = productModel.Warehouse.objects.get(pk=location)
             accountobj = accountingModel.account.objects.get(pk=account)
-            
-            # if there is any cupon
             if cupon:
                 currentCupon = orderModel.cupon.objects.get(pk=cupon)
 
-                neworder = orderModel.invoice.objects.create(shipping_method=shipping_method,bill=bill, due=due,costing=costing, delivery_charge=delivery_charge,tax=tax,
-                                                         discount=discount,discountlimit=discountlimit,cupon=currentCupon,quantity=quantity,
-                                                         data=data,contact=contactobj,location=locationobj,account=accountobj,
-                                                         delivery_date=delivery_date,invoice_number=invoice_number,address1=address1,
-                                                         address2=address2,country=country,district=district,postalCode=postalCode,
-                                                         thana=thana,s_phone=s_phone, shipping_address=shipping_address)
-                
+                neworder = orderModel.invoice.objects.create(shipping_method=shipping_method, bill=bill, delivery_charge=delivery_charge, tax=tax,
+                                                             discount=discount, discountlimit=discountlimit, cupon=currentCupon, quantity=quantity,
+                                                             data=data, contact=contactobj, location=locationobj, account=accountobj,
+                                                             delivery_date=delivery_date, invoice_number=invoice_number)
+
                 for product in request.data["products"]:
-                    item = productModel.ProductLocation.objects.get(id=product["id"])
-                    orderModel.invoice_item.objects.create(invoice=neworder,product=item,price=product["price"], quantity=product["quantity"],purchase_price=item.purchase_price)
-                    # new_quantity = item.quantity - product["quantity"]
-                    # item.quantity = new_quantity
-                    # item.save()
+                    item = productModel.ProductLocation.objects.get(
+                        id=product["id"])
+                    orderModel.invoice_item.objects.create(
+                        invoice=neworder, product=item, price=product["price"], quantity=product["quantity"], purchase_price=item.purchase_price)
+                    new_quantity = item.quantity - product["quantity"]
+                    item.quantity = new_quantity
+                    item.save()
                 if cupon:
                     currentCupon.save()
-                
+
                 return Response({"status": "success", "message": message, "id": neworder.id})
-            
+
             else:
-                neworder = orderModel.invoice.objects.create(shipping_method=shipping_method,bill=bill,due=due,costing=costing,delivery_charge=delivery_charge,tax=tax,
-                                                         discount=discount,discountlimit=discountlimit,quantity=quantity,
-                                                         data=data,contact=contactobj,location=locationobj,account=accountobj,
-                                                         delivery_date=delivery_date,invoice_number=invoice_number,address1=address1,
-                                                         address2=address2,country=country,district=district,postalCode=postalCode,
-                                                         thana=thana,s_phone=s_phone,shipping_address=shipping_address)
+                neworder = orderModel.invoice.objects.create(shipping_method=shipping_method, bill=bill, delivery_charge=delivery_charge, tax=tax,
+                                                             discount=discount, discountlimit=discountlimit, quantity=quantity,
+                                                             data=data, contact=contactobj, location=locationobj, account=accountobj,
+                                                             delivery_date=delivery_date, invoice_number=invoice_number)
                 for product in request.data["products"]:
-                    item = productModel.ProductLocation.objects.get(id=product["id"])
-                    orderModel.invoice_item.objects.create(invoice=neworder,product=item,price=product["price"], quantity=product["quantity"],purchase_price=item.purchase_price)
-                    # new_quantity = item.quantity - product["quantity"]
-                    # item.quantity = new_quantity
-                    # item.save()
+                    item = productModel.ProductLocation.objects.get(
+                        id=product["id"])
+                    orderModel.invoice_item.objects.create(
+                        invoice=neworder, product=item, price=product["price"], quantity=product["quantity"], purchase_price=item.purchase_price)
+                    new_quantity = item.quantity - product["quantity"]
+                    item.quantity = new_quantity
+                    item.save()
                 if cupon:
                     currentCupon.save()
-                
+
                 return Response({"status": "success", "message": message, "id": neworder.id})
-            
+
         else:
             return Response({"status": "failed", "message": message})
-            
+
         # return Response({"status": "success", "message": message, "data": neworder})
 
+class InvoicePaymentFilter(django_filters.FilterSet):
 
-class OnlineOrderValidityViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoices"""
-    serializer_class = serializers.Invoiceserializers
-    queryset = models.invoice.objects.all().order_by('-id')
+    start = django_filters.IsoDateTimeFilter(
+        field_name="issue_date", lookup_expr='gte')
+    end = django_filters.IsoDateTimeFilter(
+        field_name="issue_date", lookup_expr='lte')
+    keyward = django_filters.CharFilter(
+        method='filter_by_keyward', lookup_expr='icontains')
+
+    class Meta:
+        model = models.invoice_payment
+        fields = ['invoice__id', 'start', 'end',
+                  'invoice__location__id', 'keyward','invoice__is_public']
+
+    def filter_by_keyward(self, queryset, name, value):
+        return queryset.filter(Q(invoice__invoice_number__contains=value) | Q(invoice__order_number__contains=value) | Q(invoice__contact__name__contains=value) )
+
+
+class InvoicePayementViewSet(viewsets.ModelViewSet):
+    """Handel creating and updating Invoice payment"""
+    serializer_class = serializers.InvoicePaymentserializers
+    queryset = models.invoice_payment.objects.all().order_by('-id')
     authentication_classes = (TokenAuthentication,)
-    # filter_backends = [DjangoFilterBackend]
-    # filter_class = InvoiceFilter
-    
-    def create(self, request, *args, **kwargs):
-        
-        selectedDeliveryMethod = request.data["selectedDeliveryMethod"] 
-        shipping_method = request.data["shipping_method"]
-        bill = request.data["bill"]
-        due = request.data["due"]
-        delivery_charge = request.data["delivery_charge"] 
-        tax = request.data["tax"] 
-        discount = request.data["discount"] 
-        discountlimit = request.data["discountlimit"]
-        cupon = request.data["cupon"]
-        quantity = request.data["quantity"] 
-        costing = 0
-        
-        
-        redFlag = 0
-        cuonFlag = 0
-        message = "Successfully updated"
-        for product in request.data["products"]:
-            item = productModel.ProductLocation.objects.get(id=product["id"])
-            costing += float(product["quantity"]) * float(item.purchase_price)
-            if product["quantity"] > item.quantity:
-               redFlag = 1
-               message = str(item.ProductDetails.title) + " is not available"
-        
-        current_datetime = str(datetime.datetime.now()) + "+00:00"
-        dt = datetime.datetime.fromisoformat(current_datetime)
-        
-        if cupon:
-            currentCupon = orderModel.cupon.objects.get(pk=cupon)
-            if currentCupon.start <= dt <= currentCupon.end  and currentCupon.status == "Active":
-                if currentCupon.limit_type == "limited":
-                    currentCupon.limit = currentCupon.limit - 1
-            else:
-                cuonFlag = 1
-                message = "Cupon is not valid"
-            
-        
-        if redFlag == 0 and cuonFlag == 0:
-            return Response({"status": "success", "message": message})
-            
-        else:
-            return Response({"status": "failed", "message": message})
-            
-        # return Response({"status": "success", "message": message, "data": neworder})
-
-
-
+    filter_backends = [DjangoFilterBackend]
+    filter_class = InvoicePaymentFilter
+    pagination_class = StandardResultsSetPagination
 
 class InvoiceByDeliveryDateViewSet(viewsets.ModelViewSet):
     """Handel creating and updating Invoices"""
@@ -1011,29 +830,11 @@ class PurchaseViewSetP(viewsets.ModelViewSet):
         return super().retrieve(request, *args, **kwargs)
 
 
-class WordrobeFilter(django_filters.FilterSet):
-
-    start = django_filters.IsoDateTimeFilter(
-        field_name="issue_date", lookup_expr='gte')
-    end = django_filters.IsoDateTimeFilter(
-        field_name="issue_date", lookup_expr='lte')
-    keyword = django_filters.CharFilter(
-        method='filter_by_keyward', lookup_expr='icontains')
-
-    class Meta:
-        model = models.wordrobe
-        fields = ['start', 'end','keyword',]
-
-    def filter_by_keyward(self, queryset, name, value):
-        return queryset.filter(Q(wordrobe_number__contains=value) | Q(contact__name__contains=value) | Q(contact__phone__contains=value))
-
 class WordrobeViewSet(viewsets.ModelViewSet):
     """Handel creating and updating Invoices"""
     serializer_class = serializers.Wordrobeserializers
     queryset = models.wordrobe.objects.all().order_by('-id')
     authentication_classes = (TokenAuthentication,)
-    filter_backends = [DjangoFilterBackend]
-    filter_class = WordrobeFilter
     # permission_classes = (permissions.UpdateOwnProfile,)
 
     def list(self, request, *args, **kwargs):
@@ -1044,14 +845,6 @@ class WordrobeViewSet(viewsets.ModelViewSet):
         self.serializer_class = serializers.WordrobeReadserializers
         return super().retrieve(request, *args, **kwargs)
 
-class WordrobePViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoices"""
-    serializer_class = serializers.WordrobeReadserializers
-    queryset = models.wordrobe.objects.all().order_by('-id')
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = [DjangoFilterBackend]
-    filter_class = WordrobeFilter
-    pagination_class = StandardResultsSetPagination
 
 class WordrobeItemFilter(django_filters.FilterSet):
     keyward = django_filters.CharFilter(
@@ -1113,189 +906,225 @@ class WordrobeItemPViewSet(viewsets.ModelViewSet):
         self.serializer_class = serializers.WordrobeItemReadserializers
         return super().retrieve(request, *args, **kwargs)
 
+# class InvoiceVatHide(viewsets.ModelViewSet):
+#     queryset
 
-class InvoiceCheckViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoices"""
-    serializer_class = serializers.Invoiceserializers
-    queryset = models.invoice.objects.all().order_by('-id')
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+# Draft Order Views
+class DraftImageViewSet(viewsets.ModelViewSet):
+    queryset = models.DraftImage.objects.all().order_by('-id')
+    serializer_class = serializers.DraftImageSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    pagination_class = StandardResultsSetPagination
+
+    def get_serializer_context(self):
+        context = super(DraftImageViewSet, self).get_serializer_context()
+        context.update({"request": self.request})
+        return context    
+
+
+class DraftOrderViewSet(viewsets.ModelViewSet):
+    queryset = models.DraftOrder.objects.all()
+    serializer_class = serializers.DraftOrderSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    pagination_class = StandardResultsSetPagination
+
+    # def create(self, request, pk=None, *args, **kwargs):
+    #     draft_cost = get_object_or_404(models.DraftCostSheet, id=pk)
+    #     cost_sheet_items = request.data.get("cost_sheet_items")
+    #     draft_order, _ = models.DraftOrder.objects.get_or_create(draft_cost=draft_cost, cost_sheet_items=cost_sheet_items)
+    #     serialized = serializers.DraftOrderSerializer(instance=draft_order, data=request.data)
+    #     serialized.is_valid(raise_exception=True)
+    #     serialized.save(draft_cost=draft_cost, cost_sheet_items=cost_sheet_items)
+    #     return Response(serialized.data, status=status.HTTP_201_CREATED)
     
+    # def update(self, request, pk=None, *args, **kwargs):
+    #     draft_cost = get_object_or_404(models.DraftCostSheet, id=pk)
+    #     cost_sheet_items = request.data.get("cost_sheet_items")
+    #     draft_order, _ = models.DraftOrder.objects.get_or_create(draft_cost=draft_cost, cost_sheet_items=cost_sheet_items)
+    #     serialized = serializers.DraftOrderSerializer(instance=draft_order, data=request.data)
+    #     serialized.is_valid(raise_exception=True)
+    #     serialized.save(draft_cost=draft_cost, cost_sheet_items=cost_sheet_items)
+    #     return Response(serialized.data, status=status.HTTP_200_OK)
 
-    def list(self, request, *args, **kwargs):
-        invoices = models.invoice.objects.all().order_by('-id')
-        Errors = []
-        
-        for invoice in invoices:
-            journals = accountingModel.journal.objects.filter(invoice = invoice)
-            debit = 0;
-            credit = 0;
-            Type = "";
-            Salesrevenue = 0;
-            accountsReceivable = 0;
-            advancefromcustomer = 0;
-            for journal in journals:
-                if journal.chartofaccount.normally_Debit == "Debit":
-                    if journal.increase:
-                        debit += journal.amount
-                    else:
-                        debit -= journal.amount
-                else:
-                    if journal.increase:
-                        credit += journal.amount
-                    else:
-                        credit -= journal.amount
-                
-                if str(journal.chartofaccount.account_code) == str(settings.ACCOUNTS_RECEIVABLE):
-                    if journal.increase:
-                        accountsReceivable += journal.amount
-                    else:
-                        accountsReceivable -= journal.amount
-                        
-                if str(journal.chartofaccount.account_code) == str(settings.SALES_REVENUE):
-                    if journal.increase:
-                        Salesrevenue += journal.amount
-                    else:
-                        Salesrevenue -= journal.amount
-                        
-                if str(journal.chartofaccount.account_code) == str(settings.ADVANCE_FROM_CUSTOMERS):
-                    if journal.increase:
-                        advancefromcustomer += journal.amount
-                    else:
-                        advancefromcustomer -= journal.amount
-                        
-            if debit != credit:
-                Type += "Trail balance | "
-            if accountsReceivable != invoice.due:
-                Type += "Accounts Receivable | "
-            # if Salesrevenue != invoice.bill:
-            #     Type += "Sales revenue | "
-            if advancefromcustomer != invoice.advance_payment:
-                Type += "Advacne From Customer | "
-            if Type != "":
-                Errors.append({"invoice number" : invoice.invoice_number ,
-                               "Bill": invoice.bill,
-                               "Sales revenue": Salesrevenue,
-                               "Payment":  invoice.payment,
-                               "Advance Payment": invoice.advance_payment,
-                               "Due": invoice.due,
-                               "Accounts Receivable": accountsReceivable,
-                               "Debit" : debit,
-                               "Credit" : credit,
-                               "status": Type})
-        return Response({"message": "Success", "mismatch" : Errors})
+def get_serializer_context(self):
+    context = super(DraftOrderViewSet, self).get_serializer_context()
+    context.update({"request": self.request})
+    return context
 
-class InvoiceCheckautoremoveViewSet(viewsets.ModelViewSet):
-    """Handel creating and updating Invoices"""
-    serializer_class = serializers.Invoiceserializers
-    queryset = models.invoice.objects.all().order_by('-id')
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    
 
-    def list(self, request, *args, **kwargs):
-        start = datetime.now().date() 
-        end = datetime.now() - timedelta(days=365)
-        end = end.date() 
-        invoices = models.invoice.objects.all().order_by('-id')
-        for invoice in invoices:
-            journals = accountingModel.journal.objects.filter(invoice = invoice)
-            debit = 0;
-            credit = 0;
-            Type = "";
-            Salesrevenue = 0;
-            accountsReceivable = 0;
-            advancefromcustomer = 0;
-            for journal in journals:
-                if journal.chartofaccount.normally_Debit == "Debit":
-                    if journal.increase:
-                        debit += journal.amount
-                    else:
-                        debit -= journal.amount
-                else:
-                    if journal.increase:
-                        credit += journal.amount
-                    else:
-                        credit -= journal.amount
-                
-                if str(journal.chartofaccount.account_code) == str(settings.ACCOUNTS_RECEIVABLE):
-                    if journal.increase:
-                        accountsReceivable += journal.amount
-                    else:
-                        accountsReceivable -= journal.amount
-                        
-                if str(journal.chartofaccount.account_code) == str(settings.SALES_REVENUE):
-                    if journal.increase:
-                        Salesrevenue += journal.amount
-                    else:
-                        Salesrevenue -= journal.amount
-                        
-                if str(journal.chartofaccount.account_code) == str(settings.ADVANCE_FROM_CUSTOMERS):
-                    if journal.increase:
-                        advancefromcustomer += journal.amount
-                    else:
-                        advancefromcustomer -= journal.amount
-                        
-            if debit != credit:
-                Type += "Trail balance | "
-            if accountsReceivable != invoice.due:
-                Type += "Accounts Receivable | "
-            # if Salesrevenue != invoice.bill:
-            #     Type += "Sales revenue | "
-            if advancefromcustomer != invoice.advance_payment:
-                Type += "Advacne From Customer | "
-            if Type != "":
-                Errors.append({"invoice number" : invoice.invoice_number ,
-                               "Bill": invoice.bill,
-                               "Sales revenue": Salesrevenue,
-                               "Payment":  invoice.payment,
-                               "Advance Payment": invoice.advance_payment,
-                               "Due": invoice.due,
-                               "Accounts Receivable": accountsReceivable,
-                               "Debit" : debit,
-                               "Credit" : credit,
-                               "status": Type})
-        return Response({"message": "Success", "mismatch" : Errors})
+class DraftCostSheetViewSet(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    queryset = models.DraftCostSheet.objects.all()
+    serializer_class = serializers.DraftCostSheetSerializer
+    filter_backends = [DjangoFilterBackend]
 
-class RefundFilter(django_filters.FilterSet):
-    
+    # def create(self, request):
+    #     serializer = self.serializer_class(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def update(self, request, pk=None, *args, **kwargs):
+    #     draft_cost = get_object_or_404(models.DraftCostSheet, id=pk)
+    #     serialized = serializers.DraftCostSheetSerializer(
+    #         instance=draft_cost, data=request.data)
+    #     if serialized.is_valid():
+    #         draft_cost = serialized.save()
+    #         return Response(serialized.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def get_serializer_context(self):
+    context = super(DraftCostSheetViewSet, self).get_serializer_context()
+    context.update({"request": self.request})
+    return context
+
+
+class DraftCostSheetNestedViewSet(viewsets.ModelViewSet):
+    queryset = models.DraftCostSheet.objects.all()
+    serializer_class = serializers.DraftCostSheetNestedSerializer
+
+    # def retrieve(self, request, pk, **kwargs):
+    #     cost_sheet = self.get_object(pk, **kwargs)
+    #     serializer = self.serializer_class(cost_sheet, data=request.data)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def list(self, request):
+    #     cost_sheets = self.queryset.all()
+    #     serializer = self.serializer_class(cost_sheets, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def destroy(self, request, pk):
+    #     cost_sheet = self.get_object(pk)
+    #     cost_sheet.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# class DraftCostSheetViewSet(viewsets.ModelViewSet):
+#     queryset = models.DraftCostSheet.objects.all()
+#     serializer_class = serializers.DraftCostSheetSerializer
+#     authentication_classes = (TokenAuthentication,)
+#     permission_classes = [AllowAny]
+#     filter_backends = [DjangoFilterBackend]
+#     pagination_class = StandardResultsSetPagination
+
+#     def create(self, request, *args, **kwargs):
+#         orders = request.data.get("orders")
+#         orders = get_object_or_404(models.DraftOrder, id=orders)
+
+#         image = request.data.get("image")
+#         image = get_object_or_404(models.DraftImage, id=image)
+
+#         serialized = serializers.DraftCostSheetSerializer(data=request.data)
+#         if serialized.is_valid():
+#             draft_cost = serialized.save(orders=orders, image=image)
+#             return Response(serialized.data, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     def update(self, request, pk=None, *args, **kwargs):
+#         draft_cost = get_object_or_404(models.DraftCostSheet, id=pk)
+#         orders = request.data.get("orders")
+#         orders = get_object_or_404(models.Employee, id=orders)
+#         image = request.data.get("image")
+#         image = get_object_or_404(models.LeaveType, id=image)
+
+#         serialized = serializers.DraftCostSheetSerializer(
+#             instance=draft_cost, data=request.data)
+#         if serialized.is_valid():
+#             draft_cost = serialized.save(
+#                 orders=orders, image=image)
+#             return Response(serialized.data, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class InvoiceItemCopyFilter(django_filters.FilterSet):
     start = django_filters.IsoDateTimeFilter(
         field_name="issue_date", lookup_expr='gte')
     end = django_filters.IsoDateTimeFilter(
         field_name="issue_date", lookup_expr='lte')
     keyward = django_filters.CharFilter(
         method='filter_by_keyward', lookup_expr='icontains')
-
     class Meta:
-        model = models.Refund
-        fields = ['invoice__id','start', 'end', 'invoice__location__id', 'keyward']
-    
+        model = models.invoice_item_copy
+        fields = ['invoice__id', 'start', 'end', 'invoice__invoice_number',
+                  'invoice__location__id', 'keyward','invoice__is_public']
     def filter_by_keyward(self, queryset, name, value):
-        return queryset.filter(Q(invoice__invoice_number__contains=value) | Q(invoice__order_number__contains=value) | Q(invoice__contact__name__contains=value) | Q(deatils__contains=value) | Q(reason__contains=value)  )
+        return queryset.filter(Q(invoice__invoice_number__contains=value) | Q(invoice__order_number__contains=value) | Q(invoice__contact__name__contains=value) | Q(product__barcode__contains=value) | Q(Details__contains=value))
 
-    
-class RefundViewSet(viewsets.ModelViewSet):
+class InvoiceItemCopyViewSet(viewsets.ModelViewSet):
     """Handel creating and updating Invoice Items"""
-    serializer_class = serializers.Refundserializers
-    queryset = models.Refund.objects.all().order_by('-id')
+    serializer_class = serializers.InvoiceItemCopySerializers
+    queryset = models.invoice_item_copy.objects.all().order_by('-id')
     authentication_classes = (TokenAuthentication,)
     filter_backends = [DjangoFilterBackend]
-    filter_class = RefundFilter
-    pagination_class = StandardResultsSetPagination
+    filter_class = InvoiceItemCopyFilter
+    # def list(self, request, *args, **kwargs):
+    #     self.serializer_class = serializers.InvoiceItemReadserializers
+    #     return super().list(request, *args, **kwargs)
     
-    def list(self, request, *args, **kwargs):
-        self.serializer_class = serializers.Refundserializers
-        response = super().list(request, *args, **kwargs)
-        queryset = self.filter_queryset(self.get_queryset())
+    # def retrieve(self, request, *args, **kwargs):
+    #     self.serializer_class = serializers.InvoiceItemReadserializers
+    #     return super().retrieve(request, *args, **kwargs)
 
-        response.data['total_amount'] = queryset.aggregate(Sum('amount'))[
-            'amount__sum']
-        response.data['current_page_amount'] = sum(
-            [Decimal(data.get('amount', 0)) for data in response.data['results']])
-        return response
-
-class RefundItemViewSet(viewsets.ModelViewSet):
+class InvoiceExchangeFilter(django_filters.FilterSet):
+    # start = django_filters.IsoDateTimeFilter(
+    #     field_name="issue_date", lookup_expr='gte')
+    # end = django_filters.IsoDateTimeFilter(
+    #     field_name="issue_date", lookup_expr='lte')
+    start = django_filters.IsoDateTimeFilter(
+        method='filter_by_start_date', label='Start Date'
+    )
+    end = django_filters.IsoDateTimeFilter(
+        method='filter_by_end_date', label='End Date'
+    )
+    keyward = django_filters.CharFilter(
+        method='filter_by_keyward', lookup_expr='icontains')
+    month = django_filters.NumberFilter(
+        method='filter_by_month', lookup_expr='month')
+    year = django_filters.NumberFilter(
+        method='filter_by_year', lookup_expr='year')
+    contains_item = django_filters.BooleanFilter(method='filter_by_item')
+    class Meta:
+        model = models.invoice
+        fields = ['start', 'end',
+                  'invoice_number', 'delivery_date', 'Payment_method',
+                  'status', 'contact', 'location', 'account', 'keyward',
+                  'month', 'year', 'contains_item', 'is_public' ]
+        
+    def filter_by_keyward(self, queryset, name, value):
+        return queryset.filter(Q(invoice_number__contains=value) | Q(order_number__contains=value) | Q(status__icontains=value) | Q(remarks__icontains=value) | Q(contact__phone__icontains=value))
+ 
+    def filter_by_start_date(self, queryset, name, value):
+        return queryset.filter(invoice_item_copy__updated_at__gte=value).distinct()
+    def filter_by_end_date(self, queryset, name, value):
+        return queryset.filter(invoice_item_copy__updated_at__lte=value).distinct()
+    def filter_by_month(self, queryset, name, value):
+        return queryset.filter(
+            Q(issue_date__month=value) | Q(issue_date__month=value)
+        )
+    def filter_by_year(self, queryset, name, value):
+        return queryset.filter(
+            Q(issue_date__year=value) | Q(issue_date__year=value)
+        )
+    def filter_by_item(self, queryset, name, value):
+        if value:
+            return queryset.filter(invoice_item__isnull=False).distinct()
+        else:
+            return queryset.filter(invoice_item__isnull=True).distinct()
+        
+class InvoiceExchangeViewSet(viewsets.ModelViewSet):
     """Handel creating and updating Invoice Items"""
-    serializer_class = serializers.RefundItemserializers
-    queryset = models.Refund_item.objects.all().order_by('-id')
+    serializer_class = serializers.InvoiceExchangeSerializers
+    queryset = models.invoice.objects.all().order_by('-id')
     authentication_classes = (TokenAuthentication,)
     filter_backends = [DjangoFilterBackend]
-    # filter_class = InvoiceItemFilter
+    filter_class = InvoiceExchangeFilter

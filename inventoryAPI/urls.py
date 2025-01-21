@@ -21,6 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('admin/defender/', include('defender.urls')), # defender admin
     path('api/contact/', include('contact.urls')),
     path('api/product/', include('product.urls')),
     path('api/order/', include('order.urls')),
@@ -28,6 +29,6 @@ urlpatterns = [
     path('api/settings/', include('software_settings.urls')),
     path('api/accounting/', include('accounting.urls')),
     path('api/userlog/', include('userlog.urls')),
-    path('api/ecommerce/', include('ecommerce.urls')),
+    path('api/manufacturing/', include('manufacturing.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

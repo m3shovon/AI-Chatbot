@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from notifications.signals import notify
-from contact.models import UserProfile, EmployeeProfile
+from contact.models import UserProfile
 from notifications.models import Notification
 from decimal import Decimal
 from accounting import models as accounting_models
@@ -21,7 +21,7 @@ def notify_leave_application(sender, instance, created, update_fields, **kwargs)
     if created:
         '''Sending Notifications to admins'''
 
-        message = f"{employee.name} Has Applied for {instance.leaveType.Typename} for {instance.leaveDays} Days"
+        message = f"{employee.employee.name} Has Applied for {instance.leaveType.Typename} for {instance.leaveDays} Days"
         superusers = UserProfile.objects.filter(is_superuser=True)
         for superuser in superusers:
             notify.send(instance, recipient=superuser,
@@ -30,10 +30,11 @@ def notify_leave_application(sender, instance, created, update_fields, **kwargs)
         '''End Of Sending Notifications'''
     else:
         '''Sending Notifications'''
-        message = f"Hello {employee.name}, Admin Has {instance.leaveStatus} Your Application for {instance.leaveType.Typename} of {instance.leaveDays} Days"
-        notify.send(instance, recipient=employee,
+        message = f"Hello {employee.employee.name}, Admin Has {instance.leaveStatus} Your Application for {instance.leaveType.Typename} of {instance.leaveDays} Days"
+        notify.send(instance, recipient=employee.employee,
                     description='leave', verb=message)
-        sendEmail(employee, employee.email, "Leave Request Status", message)
+        sendEmail(employee.employee, employee.employee.email,
+                  "Leave Request Status", message)
         '''End Of Sending Notifications'''
 
 
@@ -48,19 +49,14 @@ def attendance_pre_save(sender, instance, update_fields, **kwargs):
     exitTime = instance.exitTime
     shift = instance.shift
     isAttended = instance.isAttended
-    defultEntryTime = EmployeeProfile.objects.get(
-        employee=instance.employee).defaultEntryTime
-    defultExitTime = EmployeeProfile.objects.get(
-        employee=instance.employee).defaultExitTime
-    defultShift = EmployeeProfile.objects.get(
-        employee=instance.employee).defaultShift
-    # print(defultEntryTime)
+    defultEntryTime = instance.employee.defaultEntryTime
+    defultExitTime = instance.employee.defaultExitTime
+    defultShift = instance.employee.defaultShift
     maxEntryTime = (datetime.datetime(2000, 1, 1, defultEntryTime.hour, defultEntryTime.minute,
                     defultEntryTime.second) + datetime.timedelta(minutes=16)).time()
     minExitTime = (datetime.datetime(2000, 1, 1, defultExitTime.hour, defultExitTime.minute,
                    defultExitTime.second) - datetime.timedelta(minutes=16)).time()
 
-    # if isAttended and shift == defultShift and (entryTime >= maxEntryTime or exitTime <= minExitTime):
     if isAttended and shift == defultShift and (entryTime >= maxEntryTime):
         instance.isLate = True
     else:
@@ -118,7 +114,7 @@ def loan_pre_save(sender, instance, **kwargs):
     """
 
     employee = instance.employee
-    outlet = instance.employee.branch
+    outlet = instance.employee.Office
     amount = instance.loanAmount
     payment_method = instance.payment_method
     prev = sender.objects.filter(id=instance.id).first()
@@ -171,12 +167,12 @@ def loan_post_save(sender, instance, created, update_fields, **kwargs):
     """
 
     employee = instance.employee
-    outlet = instance.employee.branch
+    outlet = instance.employee.Office
     amount = instance.loanAmount
     payment_method = instance.payment_method
     if created:
         '''Sending Notifications to admins'''
-        message = f"{employee.name} Has Applied for {instance.loanType} Loan of {instance.loanAmount} Taka For {instance.loanPayableMonths} Months."
+        message = f"{employee.employee.name} Has Applied for {instance.loanType} Loan of {instance.loanAmount} Taka For {instance.loanPayableMonths} Months."
         superusers = UserProfile.objects.filter(is_superuser=True)
         for superuser in superusers:
             notify.send(instance, recipient=superuser,
@@ -185,10 +181,11 @@ def loan_post_save(sender, instance, created, update_fields, **kwargs):
         '''End Of Sending Notifications'''
     else:
         '''Sending Notifications'''
-        message = f"Hello {employee.name}, Admin Has {instance.loanStatus} Your Application for {instance.loanType} Loan of {instance.loanAmount} Taka For {instance.loanPayableMonths} Months."
-        notify.send(instance, recipient=employee,
+        message = f"Hello {employee.employee.name}, Admin Has {instance.loanStatus} Your Application for {instance.loanType} Loan of {instance.loanAmount} Taka For {instance.loanPayableMonths} Months."
+        notify.send(instance, recipient=employee.employee,
                     description='loan', verb=message)
-        sendEmail(employee, employee.email, "Loan Request Status", message)
+        sendEmail(employee.employee, employee.employee.email,
+                  "Loan Request Status", message)
         '''End Of Sending Notifications'''
 
 
@@ -258,7 +255,7 @@ def payslip_post_save(sender, instance, created, update_fields, **kwargs):
 
     total_salary = Decimal(instance.net_salary)
     total_paid = Decimal(instance.payment)
-    outlet = instance.employee.branch
+    outlet = instance.employee.Office
     total_adjustment = Decimal(instance.loan_adjustment) + \
         Decimal(instance.advance_adjustment)
     if total_adjustment > 0:

@@ -1,4 +1,5 @@
 from django.db import models
+import hrm
 from product import models as productModel
 from django.utils import timezone
 from product import models as productModel
@@ -6,17 +7,14 @@ from contact import models as contactModel
 from django.db.models.signals import post_save, post_delete, pre_save
 from accounting.signals import *
 from django.db.models import JSONField
-from django.db import transaction
-import threading
 
 # Create your models here.
-lock = threading.Lock()
 
 
 class accountparent(models.Model):
     Type = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
-    
+
     def __str__(self):
         """return string representation of account"""
         return self.name
@@ -42,20 +40,20 @@ class account(models.Model):
         return self.name
 
 
-class accountStatus(models.Model):
-    """return string representation of account"""
-    amount = models.DecimalField(
-        default=0, max_digits=20, decimal_places=2, null=True, blank=True)
-    account = models.ForeignKey(
-        "account",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-    
-    def __str__(self):
-        """return string representation of account"""
-        return self.account.name + " - " + str(self.amount)
+# class accountStatus(models.Model):
+#     """return string representation of account"""
+#     amount = models.DecimalField(
+#         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
+#     account = models.ForeignKey(
+#         "account",
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         blank=True
+#     )
+
+#     def __str__(self):
+#         """return string representation of account"""
+#         return self.account.name + " - " + str(self.amount)
 
 
 class accountStatusByDate(models.Model):
@@ -63,12 +61,10 @@ class accountStatusByDate(models.Model):
     created = models.DateField(default=timezone.now)
     # accountStatus = models.ManyToManyField(accountStatus)
     data = JSONField(null=True, blank=True)
-    
+
     def __str__(self):
         """return string representation of account"""
         return str(self.created)
-    
-    
 
 
 class chartofaccount(models.Model):
@@ -94,7 +90,8 @@ class chartofaccount(models.Model):
     Financial_statement = models.TextField(blank=True, null=True)
     normally_Debit = models.TextField(blank=True, null=True)
     status = models.TextField(null=True, blank=True)
-    amount = models.DecimalField(default=0, max_digits=20, decimal_places=2, null=True, blank=True)
+    amount = models.DecimalField(
+        default=0, max_digits=20, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         """return string representation of account"""
@@ -108,7 +105,7 @@ class journal(models.Model):
         on_delete=models.CASCADE
     )
     outlet = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True
@@ -126,7 +123,7 @@ class journal(models.Model):
         blank=True
     )
     employe = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True
@@ -191,30 +188,22 @@ class journal(models.Model):
                 str(self.outlet.name)
         return details
 
-# @receiver(post_delete, sender=journal)
-# def my_model_post_delete(sender, instance, **kwargs):
-#     transaction.on_commit(lambda: journals_post_delete.delay(instance.id))
-    
-pre_save.connect(journals_pre_save, sender=journal)
-post_save.connect(journals_post_save, sender=journal)
-post_delete.connect(journals_post_delete, sender=journal)
+
+# pre_save.connect(journals_pre_save, sender=journal)
+# post_save.connect(journals_post_save, sender=journal)
+# post_delete.connect(journals_post_delete, sender=journal)
 
 
 class paymentvoucher(models.Model):
     """return string representation of account"""
-    location = models.ForeignKey(
-        productModel.Warehouse,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
+
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
-  
+
     contact = models.ForeignKey(
         contactModel.contact,
         on_delete=models.SET_NULL,
@@ -222,7 +211,7 @@ class paymentvoucher(models.Model):
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -252,7 +241,7 @@ class paymentvoucher(models.Model):
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
     created = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(default=timezone.now)
-    
+
     def __str__(self):
         """return string representation """
         return self.voucher_number
@@ -277,13 +266,13 @@ class paymentvoucheritems(models.Model):
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -314,7 +303,7 @@ class paymentvoucheritems(models.Model):
     modified = models.DateTimeField(default=timezone.now)
 
 
-post_save.connect(paymentvoucher_item_post_save, sender=paymentvoucheritems)
+# post_save.connect(paymentvoucher_item_post_save, sender=paymentvoucheritems)
 
 
 class receivevoucher(models.Model):
@@ -326,7 +315,7 @@ class receivevoucher(models.Model):
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -338,13 +327,13 @@ class receivevoucher(models.Model):
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -374,7 +363,7 @@ class receivevoucher(models.Model):
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
     created = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(default=timezone.now)
-    
+
     def __str__(self):
         """return string representation """
         return self.voucher_number
@@ -399,13 +388,13 @@ class receivevoucheritems(models.Model):
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -436,7 +425,7 @@ class receivevoucheritems(models.Model):
     modified = models.DateTimeField(default=timezone.now)
 
 
-post_save.connect(receivevoucher_item_post_save, sender=receivevoucheritems)
+# post_save.connect(receivevoucher_item_post_save, sender=receivevoucheritems)
 
 
 class journalvoucher(models.Model):
@@ -448,7 +437,7 @@ class journalvoucher(models.Model):
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -460,13 +449,13 @@ class journalvoucher(models.Model):
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -498,11 +487,9 @@ class journalvoucher(models.Model):
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
     credit = models.DecimalField(
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
-    is_payment_voucher = models.BooleanField(default=False)
-    is_receive_voucher = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(default=timezone.now)
-    
+
     def __str__(self):
         """return string representation """
         return self.voucher_number
@@ -527,13 +514,13 @@ class journalvoucheritems(models.Model):
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+       'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -560,12 +547,11 @@ class journalvoucheritems(models.Model):
     increase = models.BooleanField(default=True, null=True, blank=True)
     amount = models.DecimalField(
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
-    is_printable = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(default=timezone.now)
 
 
-post_save.connect(journalvoucher_item_post_save, sender=journalvoucheritems)
+# post_save.connect(journalvoucher_item_post_save, sender=journalvoucheritems)
 
 
 class contravoucher(models.Model):
@@ -586,13 +572,13 @@ class contravoucher(models.Model):
         related_name='accountTo'
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+        'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -604,25 +590,25 @@ class contravoucher(models.Model):
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
     created = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(default=timezone.now)
-    
+
     def __str__(self):
         """return string representation """
         return self.voucher_number
 
 
-post_save.connect(contravoucher_post_save, sender=contravoucher)
+# post_save.connect(contravoucher_post_save, sender=contravoucher)
 
 
 class pettycash(models.Model):
     """return string representation of account"""
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
     employee = models.ForeignKey(
-        contactModel.UserProfile,
+       'hrm.Employee',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -631,21 +617,16 @@ class pettycash(models.Model):
     amount = models.DecimalField(
         default=0, max_digits=20, decimal_places=2, null=True, blank=True)
     increase = models.BooleanField(default=True, null=True, blank=True)
-    created = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(default=timezone.now, editable=False)
     modified = models.DateTimeField(default=timezone.now)
-    
-    
-    def __str__(self):
-        """return string representation """
-        return self.employee.name + ' - ' + str(self.amount) + ' - ' + self.location.name
 
 
-post_save.connect(petty_cash_save, sender=pettycash)
+# post_save.connect(petty_cash_save, sender=pettycash)
 
 
 class pettycash_transfer(models.Model):
     location = models.ForeignKey(
-        productModel.Warehouse,
+        to='hrm.Office',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -666,4 +647,4 @@ class pettycash_transfer(models.Model):
     modified = models.DateTimeField(default=timezone.now)
 
 
-post_save.connect(pettycash_transfer_save, sender=pettycash_transfer)
+# post_save.connect(pettycash_transfer_save, sender=pettycash_transfer)

@@ -22,17 +22,16 @@ router.register('deliverytype', views.DeliveryTypeViewSet)
 router.register('invoices', views.InvoiceViewSet)
 router.register('invoicesP', views.InvoiceViewSetP)
 router.register('items', views.InvoiceItemViewSet)
+router.register('items-copy', views.InvoiceItemCopyViewSet)
+router.register('exchange', views.InvoiceExchangeViewSet)
+router.register('invoicepayments', views.InvoicePayementViewSet)
 router.register('solditems', views.SoldProductsViewSet)
 router.register('measurement', views.MeasurementViewSet)
 router.register('purchase', views.PurchaseViewSet)
 router.register('purchaseP', views.PurchaseViewSetP)
 
-router.register('refund', views.RefundViewSet)
-router.register('refunditems', views.RefundItemViewSet)
-
 router.register('purchaseitem', views.PurchaseItemViewSet)
 router.register('wordrobe', views.WordrobeViewSet)
-router.register('wordrobeP', views.WordrobePViewSet)
 router.register('wordrobeitem', views.WordrobeItemViewSet)
 router.register('wordrobeitemP', views.WordrobeItemPViewSet)
 router.register('Services', views.ServicesViewSet)
@@ -41,18 +40,14 @@ router.register('costings', views.ServicesCostingViewSet)
 router.register('cupon', views.CuponViewSet)
 router.register('delivery', views.InvoiceByDeliveryDateViewSet)
 router.register('vat', views.InvoiceVatViewSet)
+router.register('draftimages', views.DraftImageViewSet)
+router.register('draftorders', views.DraftOrderViewSet)
+router.register('draftcostsheets', views.DraftCostSheetViewSet)
+# router.register('nesteddraftcostsheets', views.DraftCostSheetNestedViewSet)
 router.register('excelsales', views.InvoiceExcelViewSet)
-router.register('salesperson', views.SalesPersonViewSet)
-router.register('ipn', views.IPNViewSet)
 
 
-router.register('allonlineorder', views.AllOnlineOrderViewSet, basename="allonlineorder")
 router.register('onlineorder', views.OnlineOrderViewSet)
-router.register('onlineordervaliditycheck', views.OnlineOrderValidityViewSet)
-
-router.register('invoiceDebitCreditcheck', views.InvoiceCheckViewSet)
-router.register('InvoiceCheckautoremove', views.InvoiceCheckautoremoveViewSet)
-
 
 urlpatterns = [
     path('', include(router.urls)),
