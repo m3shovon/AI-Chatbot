@@ -30,5 +30,6 @@ urlpatterns = [
     path('api/accounting/', include('accounting.urls')),
     path('api/userlog/', include('userlog.urls')),
     path('api/manufacturing/', include('manufacturing.urls')),
+    path('api/chatbot/', include('chatbot.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

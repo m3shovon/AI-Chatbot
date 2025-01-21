@@ -34,7 +34,7 @@ DEBUG = config('WEB_DEBUG', cast=bool)
 ALLOWED_HOSTS = ['*']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-6c80.up.railway.app']
+# CSRF_TRUSTED_ORIGINS = ['']
 
 
 # Application definition
@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'storages',
     'userlog',
+    'chatbot',
     # 'defender'
     'manufacturing',
     'import_export',

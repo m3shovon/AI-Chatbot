@@ -76,3 +76,9 @@ whitenoise==6.5.0
 
 # Specials
 django-import-export
+
+# Chatbot
+openai 
+pydantic-ai
+'pydantic-ai-slim[openai]'
+
