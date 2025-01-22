@@ -10,16 +10,24 @@ from product.models import ProductDetails, Category, Attribute, AttributeTerm
 import openai
 from pydantic_ai import Agent
 
-openai.api_key = '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'
+# openai.api_key = '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'
 
 class ChatbotViewSet(ViewSet):
     def create(self, request):
         serializer = ChatbotInputSerializer(data=request.data)
         if serializer.is_valid():
             query = serializer.validated_data['query']
-            agent = Agent(model="gpt-4", openai_api_key=openai.api_key)
+
+            # Initialize the agent without `openai_api_key`
+            agent = Agent(model="gpt-4o")  
+            print(agent)
+
+
             try:
+                # Query the database
                 response = self.query_database(query)
+
+                # Generate AI response
                 ai_response = agent.chat(
                     f"Given this user query: '{query}', here's the response from the database: '{response}'. "
                     "Make the response more user-friendly and helpful."
@@ -35,6 +43,9 @@ class ChatbotViewSet(ViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def query_database(self, query):
+        """
+        Query the database based on the user's input.
+        """
         products = ProductDetails.objects.filter(
             Q(title__icontains=query) | Q(tags__icontains=query)
         )
