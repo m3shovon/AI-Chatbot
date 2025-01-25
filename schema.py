@@ -1,101 +1,65 @@
 import psycopg2
-from psycopg2 import sql
 
+# Connection parameters
+host = "localhost"
+port = "5432"
+database = "lifestyle-erp"
+user = "sadmin"
+password = "sadmin123"
 
-def get_database_schema(connection_params):
-    """
-    Connects to a PostgreSQL database and retrieves the full schema.
-    
-    Parameters:
-        connection_params (dict): Database connection details.
-        
-    Returns:
-        dict: A dictionary representation of the database schema.
-    """
-    try:
-        # Connect to the PostgreSQL database
-        with psycopg2.connect(**connection_params) as conn:
-            with conn.cursor() as cur:
-                # Fetch all schemas
-                cur.execute("SELECT schema_name FROM information_schema.schemata")
-                schemas = [row[0] for row in cur.fetchall()]
+try:
+    # Connect to PostgreSQL
+    connection = psycopg2.connect(
+        host=host,
+        port=port,
+        database=database,
+        user=user,
+        password=password
+    )
+    cursor = connection.cursor()
 
-                database_schema = {}
+    # Fetch table schema details
+    cursor.execute("""
+        SELECT table_name, column_name, data_type, is_nullable, character_maximum_length
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+        ORDER BY table_name, ordinal_position;
+    """)
+    columns = cursor.fetchall()
 
-                for schema in schemas:
-                    # Fetch all tables in the schema
-                    cur.execute(
-                        sql.SQL(
-                            """
-                            SELECT table_name 
-                            FROM information_schema.tables
-                            WHERE table_schema = %s
-                            """
-                        ),
-                        [schema],
-                    )
-                    tables = [row[0] for row in cur.fetchall()]
+    print("Database Schema:")
+    current_table = None
+    for column in columns:
+        table_name, column_name, data_type, is_nullable, char_length = column
 
-                    database_schema[schema] = {}
+        # Print table name once
+        if table_name != current_table:
+            print(f"\nTable: {table_name}")
+            print("-" * 30)
+            current_table = table_name
 
-                    for table in tables:
-                        # Fetch columns and their details
-                        cur.execute(
-                            sql.SQL(
-                                """
-                                SELECT column_name, data_type, is_nullable
-                                FROM information_schema.columns
-                                WHERE table_schema = %s AND table_name = %s
-                                """
-                            ),
-                            [schema, table],
-                        )
-                        columns = [
-                            {"name": row[0], "type": row[1], "nullable": row[2]}
-                            for row in cur.fetchall()
-                        ]
+        # Print column details
+        nullable = "YES" if is_nullable == "YES" else "NO"
+        print(f"Column: {column_name}, Type: {data_type}, Nullable: {nullable}, Length: {char_length or 'N/A'}")
 
-                        # Fetch constraints
-                        cur.execute(
-                            sql.SQL(
-                                """
-                                SELECT constraint_type, constraint_name
-                                FROM information_schema.table_constraints
-                                WHERE table_schema = %s AND table_name = %s
-                                """
-                            ),
-                            [schema, table],
-                        )
-                        constraints = [
-                            {"type": row[0], "name": row[1]} for row in cur.fetchall()
-                        ]
+    # Fetch primary keys
+    cursor.execute("""
+        SELECT tc.table_name, kcu.column_name
+        FROM information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+        ON tc.constraint_name = kcu.constraint_name
+        WHERE tc.constraint_type = 'PRIMARY KEY'
+        AND tc.table_schema = 'public';
+    """)
+    primary_keys = cursor.fetchall()
 
-                        # Store table details
-                        database_schema[schema][table] = {
-                            "columns": columns,
-                            "constraints": constraints,
-                        }
+    print("\nPrimary Keys:")
+    for pk in primary_keys:
+        print(f"Table: {pk[0]}, Column: {pk[1]}")
 
-                return database_schema
-
-    except psycopg2.Error as e:
-        print(f"Database error: {e}")
-        return None
-
-
-# Connection parameters for the database
-connection_params = {
-    "dbname": "lifestyle-erp",
-    "user": "sadmin",
-    "password": "sadmin123",
-    "host": "localhost", 
-    "port": "5432",  
-}
-
-# Fetch and print the schema
-if __name__ == "__main__":
-    schema = get_database_schema(connection_params)
-    if schema:
-        import json
-
-        print(json.dumps(schema, indent=4))
+except Exception as e:
+    print(f"Error: {e}")
+finally:
+    if connection:
+        cursor.close()
+        connection.close()
