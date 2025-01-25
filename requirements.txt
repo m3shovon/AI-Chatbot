@@ -89,3 +89,6 @@ yfinance
 # openai
 # python-dotenv
 # pytest
+
+psycopg2-binary
+psycopg2

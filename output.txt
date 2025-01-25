@@ -1,0 +1,1390 @@
+Database Schema:
+
+Table: accounting_account
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: type, Type: character varying, Nullable: YES, Length: 255
+Column: details, Type: text, Nullable: YES, Length: N/A
+Column: address, Type: text, Nullable: YES, Length: N/A
+Column: account_no, Type: character varying, Nullable: YES, Length: 255
+Column: cash, Type: numeric, Nullable: YES, Length: N/A
+Column: txnCharge, Type: numeric, Nullable: YES, Length: N/A
+Column: is_active, Type: boolean, Nullable: YES, Length: N/A
+Column: accountparent_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_accountparent
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Type, Type: character varying, Nullable: YES, Length: 255
+Column: name, Type: character varying, Nullable: YES, Length: 255
+
+Table: accounting_accountstatusbydate
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: created, Type: date, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+
+Table: accounting_chartofaccount
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: account_name, Type: character varying, Nullable: NO, Length: 255
+Column: account_code, Type: character varying, Nullable: NO, Length: 255
+Column: Financial_statement, Type: text, Nullable: YES, Length: N/A
+Column: normally_Debit, Type: text, Nullable: YES, Length: N/A
+Column: status, Type: text, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: group_id, Type: bigint, Nullable: YES, Length: N/A
+Column: sub_group_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_contravoucher
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: voucher_number, Type: character varying, Nullable: NO, Length: 255
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: referance, Type: text, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: accountFrom_id, Type: bigint, Nullable: YES, Length: N/A
+Column: accountTo_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_journal
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: details, Type: text, Nullable: YES, Length: N/A
+Column: voucher_type, Type: text, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: increase, Type: boolean, Nullable: YES, Length: N/A
+Column: is_checked, Type: boolean, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: chartofaccount_id, Type: bigint, Nullable: NO, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employe_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: loan_id, Type: bigint, Nullable: YES, Length: N/A
+Column: outlet_id, Type: bigint, Nullable: YES, Length: N/A
+Column: payslip_id, Type: bigint, Nullable: YES, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: transfer_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_journalvoucher
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: voucher_number, Type: character varying, Nullable: NO, Length: 255
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: referance, Type: text, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: debit, Type: numeric, Nullable: YES, Length: N/A
+Column: credit, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_journalvoucheritems
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: increase, Type: boolean, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: chartofaccount_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: journalvoucher_id, Type: bigint, Nullable: NO, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_paymentvoucher
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: voucher_number, Type: character varying, Nullable: NO, Length: 255
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: referance, Type: text, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_paymentvoucheritems
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: increase, Type: boolean, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: chartofaccount_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: paymentvoucher_id, Type: bigint, Nullable: NO, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_pettycash
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: narration, Type: character varying, Nullable: NO, Length: 900
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: increase, Type: boolean, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_pettycash_transfer
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: cash_amount, Type: numeric, Nullable: YES, Length: N/A
+Column: pett_cash_amount, Type: numeric, Nullable: YES, Length: N/A
+Column: collect_cash, Type: boolean, Nullable: YES, Length: N/A
+Column: add_cash, Type: boolean, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_receivevoucher
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: voucher_number, Type: character varying, Nullable: NO, Length: 255
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: referance, Type: text, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: accounting_receivevoucheritems
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: narration, Type: text, Nullable: YES, Length: N/A
+Column: increase, Type: boolean, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: chartofaccount_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchasee_id, Type: bigint, Nullable: YES, Length: N/A
+Column: receivevoucher_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: admin_interface_theme
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 50
+Column: active, Type: boolean, Nullable: NO, Length: N/A
+Column: title, Type: character varying, Nullable: NO, Length: 50
+Column: title_visible, Type: boolean, Nullable: NO, Length: N/A
+Column: logo, Type: character varying, Nullable: NO, Length: 100
+Column: logo_visible, Type: boolean, Nullable: NO, Length: N/A
+Column: css_header_background_color, Type: character varying, Nullable: NO, Length: 10
+Column: title_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_header_text_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_header_link_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_header_link_hover_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_module_background_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_module_text_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_module_link_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_module_link_hover_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_module_rounded_corners, Type: boolean, Nullable: NO, Length: N/A
+Column: css_generic_link_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_generic_link_hover_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_save_button_background_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_save_button_background_hover_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_save_button_text_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_delete_button_background_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_delete_button_background_hover_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_delete_button_text_color, Type: character varying, Nullable: NO, Length: 10
+Column: list_filter_dropdown, Type: boolean, Nullable: NO, Length: N/A
+Column: related_modal_active, Type: boolean, Nullable: NO, Length: N/A
+Column: related_modal_background_color, Type: character varying, Nullable: NO, Length: 10
+Column: related_modal_rounded_corners, Type: boolean, Nullable: NO, Length: N/A
+Column: logo_color, Type: character varying, Nullable: NO, Length: 10
+Column: recent_actions_visible, Type: boolean, Nullable: NO, Length: N/A
+Column: favicon, Type: character varying, Nullable: NO, Length: 100
+Column: related_modal_background_opacity, Type: character varying, Nullable: NO, Length: 5
+Column: env_name, Type: character varying, Nullable: NO, Length: 50
+Column: env_visible_in_header, Type: boolean, Nullable: NO, Length: N/A
+Column: env_color, Type: character varying, Nullable: NO, Length: 10
+Column: env_visible_in_favicon, Type: boolean, Nullable: NO, Length: N/A
+Column: related_modal_close_button_visible, Type: boolean, Nullable: NO, Length: N/A
+Column: language_chooser_active, Type: boolean, Nullable: NO, Length: N/A
+Column: language_chooser_display, Type: character varying, Nullable: NO, Length: 10
+Column: list_filter_sticky, Type: boolean, Nullable: NO, Length: N/A
+Column: form_pagination_sticky, Type: boolean, Nullable: NO, Length: N/A
+Column: form_submit_sticky, Type: boolean, Nullable: NO, Length: N/A
+Column: css_module_background_selected_color, Type: character varying, Nullable: NO, Length: 10
+Column: css_module_link_selected_color, Type: character varying, Nullable: NO, Length: 10
+Column: logo_max_height, Type: smallint, Nullable: NO, Length: N/A
+Column: logo_max_width, Type: smallint, Nullable: NO, Length: N/A
+Column: foldable_apps, Type: boolean, Nullable: NO, Length: N/A
+Column: language_chooser_control, Type: character varying, Nullable: NO, Length: 20
+Column: list_filter_highlight, Type: boolean, Nullable: NO, Length: N/A
+Column: list_filter_removal_links, Type: boolean, Nullable: NO, Length: N/A
+Column: show_fieldsets_as_tabs, Type: boolean, Nullable: NO, Length: N/A
+Column: show_inlines_as_tabs, Type: boolean, Nullable: NO, Length: N/A
+Column: css_generic_link_active_color, Type: character varying, Nullable: NO, Length: 10
+Column: collapsible_stacked_inlines, Type: boolean, Nullable: NO, Length: N/A
+Column: collapsible_stacked_inlines_collapsed, Type: boolean, Nullable: NO, Length: N/A
+Column: collapsible_tabular_inlines, Type: boolean, Nullable: NO, Length: N/A
+Column: collapsible_tabular_inlines_collapsed, Type: boolean, Nullable: NO, Length: N/A
+
+Table: auth_group
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 150
+
+Table: auth_group_permissions
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: group_id, Type: integer, Nullable: NO, Length: N/A
+Column: permission_id, Type: integer, Nullable: NO, Length: N/A
+
+Table: auth_permission
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: content_type_id, Type: integer, Nullable: NO, Length: N/A
+Column: codename, Type: character varying, Nullable: NO, Length: 100
+
+Table: authtoken_token
+------------------------------
+Column: key, Type: character varying, Nullable: NO, Length: 40
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: user_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: contact_appointment
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: title, Type: character varying, Nullable: YES, Length: 255
+Column: start_time, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: end_time, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: status, Type: character varying, Nullable: NO, Length: 100
+Column: description, Type: text, Nullable: YES, Length: N/A
+Column: service_id, Type: bigint, Nullable: YES, Length: N/A
+Column: user_id, Type: bigint, Nullable: YES, Length: N/A
+Column: date, Type: date, Nullable: YES, Length: N/A
+Column: schedule_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: contact_availability
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: day_of_week, Type: integer, Nullable: NO, Length: N/A
+Column: start_time, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: end_time, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: user_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: contact_contact
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: YES, Length: 255
+Column: email, Type: character varying, Nullable: YES, Length: 255
+Column: phone, Type: character varying, Nullable: YES, Length: 255
+Column: emergency_contact, Type: character varying, Nullable: YES, Length: 255
+Column: address, Type: character varying, Nullable: YES, Length: 500
+Column: Type, Type: character varying, Nullable: YES, Length: 255
+Column: remarks, Type: character varying, Nullable: YES, Length: 550
+Column: account_balance, Type: numeric, Nullable: YES, Length: N/A
+Column: points, Type: character varying, Nullable: YES, Length: 550
+Column: Special_Date_Type, Type: character varying, Nullable: YES, Length: 255
+Column: special_dates, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: is_active, Type: boolean, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: role_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: contact_contacttype
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Type, Type: character varying, Nullable: YES, Length: 255
+Column: name, Type: character varying, Nullable: YES, Length: 255
+Column: cupon_name, Type: character varying, Nullable: YES, Length: 255
+
+Table: contact_notification
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: content, Type: text, Nullable: NO, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: user_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: contact_review
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: rating, Type: integer, Nullable: NO, Length: N/A
+Column: feedback, Type: text, Nullable: NO, Length: N/A
+Column: appointment_id, Type: bigint, Nullable: NO, Length: N/A
+Column: user_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: contact_service
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 100
+Column: description, Type: text, Nullable: NO, Length: N/A
+
+Table: contact_serviceschedule
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: day_of_week, Type: character varying, Nullable: YES, Length: 255
+Column: start_time, Type: time without time zone, Nullable: YES, Length: N/A
+Column: end_time, Type: time without time zone, Nullable: YES, Length: N/A
+Column: service_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: contact_userprofile
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: password, Type: character varying, Nullable: NO, Length: 128
+Column: last_login, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: is_superuser, Type: boolean, Nullable: NO, Length: N/A
+Column: email, Type: character varying, Nullable: NO, Length: 255
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: is_active, Type: boolean, Nullable: NO, Length: N/A
+Column: is_staff, Type: boolean, Nullable: NO, Length: N/A
+Column: branch_id, Type: bigint, Nullable: YES, Length: N/A
+Column: user_role_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: contact_userprofile_groups
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: userprofile_id, Type: bigint, Nullable: NO, Length: N/A
+Column: group_id, Type: integer, Nullable: NO, Length: N/A
+
+Table: contact_userprofile_user_permissions
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: userprofile_id, Type: bigint, Nullable: NO, Length: N/A
+Column: permission_id, Type: integer, Nullable: NO, Length: N/A
+
+Table: django_admin_log
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: action_time, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: object_id, Type: text, Nullable: YES, Length: N/A
+Column: object_repr, Type: character varying, Nullable: NO, Length: 200
+Column: action_flag, Type: smallint, Nullable: NO, Length: N/A
+Column: change_message, Type: text, Nullable: NO, Length: N/A
+Column: content_type_id, Type: integer, Nullable: YES, Length: N/A
+Column: user_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: django_content_type
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: app_label, Type: character varying, Nullable: NO, Length: 100
+Column: model, Type: character varying, Nullable: NO, Length: 100
+
+Table: django_migrations
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: app, Type: character varying, Nullable: NO, Length: 255
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: applied, Type: timestamp with time zone, Nullable: NO, Length: N/A
+
+Table: django_session
+------------------------------
+Column: session_key, Type: character varying, Nullable: NO, Length: 40
+Column: session_data, Type: text, Nullable: NO, Length: N/A
+Column: expire_date, Type: timestamp with time zone, Nullable: NO, Length: N/A
+
+Table: django_site
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: domain, Type: character varying, Nullable: NO, Length: 100
+Column: name, Type: character varying, Nullable: NO, Length: 50
+
+Table: hrm_attendance
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: attendanceDate, Type: date, Nullable: NO, Length: N/A
+Column: shift, Type: character varying, Nullable: NO, Length: 255
+Column: isAttended, Type: boolean, Nullable: NO, Length: N/A
+Column: entryTime, Type: time without time zone, Nullable: YES, Length: N/A
+Column: exitTime, Type: time without time zone, Nullable: YES, Length: N/A
+Column: note, Type: character varying, Nullable: YES, Length: 255
+Column: overTime, Type: double precision, Nullable: YES, Length: N/A
+Column: lateTime, Type: double precision, Nullable: YES, Length: N/A
+Column: isLate, Type: boolean, Nullable: NO, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_company
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: GroupOfCompany_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: hrm_department
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: rank, Type: integer, Nullable: YES, Length: N/A
+
+Table: hrm_designation
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: rank, Type: integer, Nullable: YES, Length: N/A
+Column: responsibility, Type: character varying, Nullable: YES, Length: 550
+Column: Department_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: hrm_employee
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: photo, Type: character varying, Nullable: YES, Length: 100
+Column: phone, Type: character varying, Nullable: YES, Length: 255
+Column: emergency_phone, Type: character varying, Nullable: YES, Length: 255
+Column: address, Type: character varying, Nullable: YES, Length: 500
+Column: defaultShift, Type: character varying, Nullable: NO, Length: 255
+Column: defaultEntryTime, Type: time without time zone, Nullable: YES, Length: N/A
+Column: defaultExitTime, Type: time without time zone, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: Designation_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Office_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_employeedocument
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: file, Type: character varying, Nullable: YES, Length: 100
+Column: note, Type: character varying, Nullable: YES, Length: 255
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_employeeleave
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: leaveStart, Type: date, Nullable: NO, Length: N/A
+Column: leaveEnd, Type: date, Nullable: NO, Length: N/A
+Column: leaveDays, Type: integer, Nullable: YES, Length: N/A
+Column: leaveStatus, Type: character varying, Nullable: NO, Length: 255
+Column: note, Type: text, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+Column: leaveType_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_groupofcompany
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+
+Table: hrm_increamentpolicy
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: note, Type: character varying, Nullable: YES, Length: 255
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_leavetype
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Typename, Type: character varying, Nullable: NO, Length: 255
+Column: initialDays, Type: integer, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+
+Table: hrm_loan
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: loanAmount, Type: double precision, Nullable: YES, Length: N/A
+Column: loanType, Type: character varying, Nullable: YES, Length: 255
+Column: loanPayableMonths, Type: integer, Nullable: YES, Length: N/A
+Column: loanPayableAmount, Type: double precision, Nullable: YES, Length: N/A
+Column: loanStatus, Type: character varying, Nullable: NO, Length: 255
+Column: loanPaymentStatus, Type: character varying, Nullable: NO, Length: 255
+Column: note, Type: character varying, Nullable: YES, Length: 255
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+Column: payment_method_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: hrm_loanpayment
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: paidAmount, Type: double precision, Nullable: YES, Length: N/A
+Column: paymentDate, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+Column: loan_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_office
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: logo, Type: character varying, Nullable: YES, Length: 100
+Column: address, Type: character varying, Nullable: YES, Length: 500
+Column: contact, Type: character varying, Nullable: YES, Length: 500
+Column: petty_cash, Type: numeric, Nullable: NO, Length: N/A
+Column: cash, Type: numeric, Nullable: NO, Length: N/A
+Column: is_outlet, Type: boolean, Nullable: YES, Length: N/A
+Column: is_office, Type: boolean, Nullable: YES, Length: N/A
+Column: is_warehouse, Type: boolean, Nullable: YES, Length: N/A
+Column: Company_id, Type: bigint, Nullable: YES, Length: N/A
+Column: OfficeLocation_id, Type: bigint, Nullable: YES, Length: N/A
+Column: OfficeType_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Office_parent_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: hrm_office_Department
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: office_id, Type: bigint, Nullable: NO, Length: N/A
+Column: department_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_officelocation
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: OfficeLocation_parent_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: hrm_officetype
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: rank, Type: integer, Nullable: YES, Length: N/A
+
+Table: hrm_payslip
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: salaryMonth, Type: integer, Nullable: YES, Length: N/A
+Column: salaryYear, Type: integer, Nullable: YES, Length: N/A
+Column: publicHoliday, Type: integer, Nullable: YES, Length: N/A
+Column: leave, Type: integer, Nullable: YES, Length: N/A
+Column: present, Type: integer, Nullable: YES, Length: N/A
+Column: absent, Type: integer, Nullable: YES, Length: N/A
+Column: late, Type: integer, Nullable: YES, Length: N/A
+Column: dayOverTime, Type: integer, Nullable: YES, Length: N/A
+Column: nightOverTime, Type: integer, Nullable: YES, Length: N/A
+Column: overtimeTotal, Type: double precision, Nullable: YES, Length: N/A
+Column: incentiveTotal, Type: double precision, Nullable: YES, Length: N/A
+Column: dailyAllowanceTotal, Type: double precision, Nullable: YES, Length: N/A
+Column: fine, Type: double precision, Nullable: YES, Length: N/A
+Column: loan_adjustment, Type: double precision, Nullable: YES, Length: N/A
+Column: advance_adjustment, Type: double precision, Nullable: YES, Length: N/A
+Column: net_salary, Type: double precision, Nullable: YES, Length: N/A
+Column: payment, Type: double precision, Nullable: YES, Length: N/A
+Column: due, Type: double precision, Nullable: YES, Length: N/A
+Column: amount_1, Type: double precision, Nullable: YES, Length: N/A
+Column: payment_method_info_1, Type: character varying, Nullable: YES, Length: 255
+Column: amount_2, Type: double precision, Nullable: YES, Length: N/A
+Column: payment_method_info_2, Type: character varying, Nullable: YES, Length: 255
+Column: paymentDate, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+Column: payment_method_1_id, Type: bigint, Nullable: YES, Length: N/A
+Column: payment_method_2_id, Type: bigint, Nullable: YES, Length: N/A
+Column: salary_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_permission
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: is_create, Type: boolean, Nullable: NO, Length: N/A
+Column: is_read, Type: boolean, Nullable: NO, Length: N/A
+Column: is_update, Type: boolean, Nullable: NO, Length: N/A
+Column: is_delete, Type: boolean, Nullable: NO, Length: N/A
+Column: Designation_id, Type: bigint, Nullable: YES, Length: N/A
+Column: module_id, Type: bigint, Nullable: YES, Length: N/A
+Column: sub_module_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: hrm_salary
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: monthlySalary, Type: double precision, Nullable: YES, Length: N/A
+Column: dailyAllowance, Type: double precision, Nullable: YES, Length: N/A
+Column: incentive, Type: double precision, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: hrm_salarypayment
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: paidAmount, Type: double precision, Nullable: YES, Length: N/A
+Column: salaryMonth, Type: integer, Nullable: YES, Length: N/A
+Column: salaryYear, Type: integer, Nullable: YES, Length: N/A
+Column: paymentDate, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: modified, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: employee_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: manufacturing_manufacture_cost
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: type, Type: character varying, Nullable: YES, Length: 100
+Column: name, Type: character varying, Nullable: NO, Length: 100
+Column: description, Type: text, Nullable: YES, Length: N/A
+Column: unit_name, Type: character varying, Nullable: YES, Length: 10
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: cost_per_unit, Type: numeric, Nullable: YES, Length: N/A
+Column: total_cost, Type: numeric, Nullable: YES, Length: N/A
+Column: Product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: ProductLocation_id, Type: bigint, Nullable: YES, Length: N/A
+Column: ProductionLine_id, Type: bigint, Nullable: NO, Length: N/A
+Column: ProductionLine_item_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: manufacturing_manufacturingrecord
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: start_date, Type: date, Nullable: NO, Length: N/A
+Column: end_date, Type: date, Nullable: NO, Length: N/A
+Column: notes, Type: text, Nullable: NO, Length: N/A
+Column: line_id, Type: bigint, Nullable: NO, Length: N/A
+Column: order_id, Type: bigint, Nullable: NO, Length: N/A
+Column: workstation_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: manufacturing_productionline
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: line_name, Type: character varying, Nullable: NO, Length: 100
+Column: description, Type: text, Nullable: NO, Length: N/A
+Column: location, Type: character varying, Nullable: NO, Length: 100
+Column: capacity, Type: integer, Nullable: NO, Length: N/A
+Column: start_date, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: end_date, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 100
+Column: capacity_consumed, Type: integer, Nullable: NO, Length: N/A
+
+Table: manufacturing_productionline_item
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: capacity, Type: integer, Nullable: NO, Length: N/A
+Column: start_date, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: end_date, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 100
+Column: ProductionLine_id, Type: bigint, Nullable: NO, Length: N/A
+Column: WorkOrderItem_id, Type: bigint, Nullable: NO, Length: N/A
+Column: Workorder_id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity_complete, Type: integer, Nullable: NO, Length: N/A
+Column: quantity_damaged, Type: integer, Nullable: NO, Length: N/A
+Column: quantity_pending, Type: integer, Nullable: NO, Length: N/A
+
+Table: manufacturing_qualitytest
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: test_date, Type: date, Nullable: NO, Length: N/A
+Column: pass_fail_status, Type: boolean, Nullable: NO, Length: N/A
+Column: notes, Type: text, Nullable: NO, Length: N/A
+Column: test_type_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: manufacturing_qualityteststatus
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 100
+Column: ProductionLine_item_id, Type: bigint, Nullable: YES, Length: N/A
+Column: order_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: manufacturing_workorder
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: order_name, Type: character varying, Nullable: YES, Length: 255
+Column: order_number, Type: character varying, Nullable: YES, Length: 255
+Column: start_date, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: end_date, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: quantity_needed, Type: integer, Nullable: NO, Length: N/A
+Column: total_cost, Type: numeric, Nullable: YES, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 100
+Column: Product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: draft_cost_sheet_id, Type: bigint, Nullable: YES, Length: N/A
+Column: quantity_complete, Type: integer, Nullable: NO, Length: N/A
+Column: quantity_damaged, Type: integer, Nullable: NO, Length: N/A
+Column: quantity_pending, Type: integer, Nullable: NO, Length: N/A
+Column: service_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: manufacturing_workorderitem
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity_needed, Type: integer, Nullable: NO, Length: N/A
+Column: Workorder_id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity_complete, Type: integer, Nullable: NO, Length: N/A
+Column: quantity_damaged, Type: integer, Nullable: NO, Length: N/A
+Column: quantity_pending, Type: integer, Nullable: NO, Length: N/A
+
+Table: manufacturing_workorderitem_Attributes
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: workorderitem_id, Type: bigint, Nullable: NO, Length: N/A
+Column: attributeterm_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: manufacturing_workstation
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: workstation_name, Type: character varying, Nullable: NO, Length: 100
+Column: description, Type: text, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 100
+
+Table: manufacturing_workstationitems
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: ProductionLine_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Workstation_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: manufacturing_workstationstatus
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: task_name, Type: character varying, Nullable: NO, Length: 100
+Column: status, Type: character varying, Nullable: YES, Length: 100
+Column: workstation_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: notifications_notification
+------------------------------
+Column: id, Type: integer, Nullable: NO, Length: N/A
+Column: level, Type: character varying, Nullable: NO, Length: 20
+Column: unread, Type: boolean, Nullable: NO, Length: N/A
+Column: actor_object_id, Type: character varying, Nullable: NO, Length: 255
+Column: verb, Type: character varying, Nullable: NO, Length: 255
+Column: description, Type: text, Nullable: YES, Length: N/A
+Column: target_object_id, Type: character varying, Nullable: YES, Length: 255
+Column: action_object_object_id, Type: character varying, Nullable: YES, Length: 255
+Column: timestamp, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: public, Type: boolean, Nullable: NO, Length: N/A
+Column: action_object_content_type_id, Type: integer, Nullable: YES, Length: N/A
+Column: actor_content_type_id, Type: integer, Nullable: NO, Length: N/A
+Column: recipient_id, Type: bigint, Nullable: NO, Length: N/A
+Column: target_content_type_id, Type: integer, Nullable: YES, Length: N/A
+Column: deleted, Type: boolean, Nullable: NO, Length: N/A
+Column: emailed, Type: boolean, Nullable: NO, Length: N/A
+Column: data, Type: text, Nullable: YES, Length: N/A
+
+Table: order_cupon
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: amount, Type: numeric, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 255
+Column: start, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: end, Type: timestamp with time zone, Nullable: YES, Length: N/A
+Column: limit_type, Type: character varying, Nullable: YES, Length: 255
+Column: limit, Type: integer, Nullable: NO, Length: N/A
+Column: ref_type, Type: character varying, Nullable: NO, Length: 2
+
+Table: order_deliverytype
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Type, Type: character varying, Nullable: YES, Length: 255
+Column: name, Type: character varying, Nullable: YES, Length: 255
+
+Table: order_draftcostsheet
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: style_name, Type: character varying, Nullable: NO, Length: 100
+Column: client_name, Type: character varying, Nullable: NO, Length: 100
+Column: style_code, Type: character varying, Nullable: NO, Length: 100
+Column: designer_name, Type: character varying, Nullable: NO, Length: 100
+Column: description, Type: text, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: date, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: net_total_cost, Type: numeric, Nullable: NO, Length: N/A
+Column: profit_percentage, Type: numeric, Nullable: NO, Length: N/A
+Column: net_selling_price, Type: numeric, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+
+Table: order_draftimage
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: product_image, Type: character varying, Nullable: YES, Length: 100
+Column: cost_sheet_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_draftorder
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: cost_sheet_items, Type: character varying, Nullable: YES, Length: 100
+Column: draft_name, Type: character varying, Nullable: YES, Length: 255
+Column: unit_quantity, Type: numeric, Nullable: YES, Length: N/A
+Column: unit_name, Type: character varying, Nullable: YES, Length: 100
+Column: unit_price, Type: numeric, Nullable: YES, Length: N/A
+Column: amount, Type: numeric, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: cost_sheet_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_exchange
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: price, Type: numeric, Nullable: YES, Length: N/A
+Column: reason, Type: character varying, Nullable: NO, Length: 255
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: NO, Length: 255
+Column: deatils, Type: character varying, Nullable: NO, Length: 2550
+Column: Exchange_product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: NO, Length: N/A
+Column: services_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_invoice
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: invoice_number, Type: character varying, Nullable: NO, Length: 255
+Column: order_number, Type: character varying, Nullable: NO, Length: 255
+Column: shipping_address, Type: text, Nullable: NO, Length: N/A
+Column: delivery_charge, Type: numeric, Nullable: NO, Length: N/A
+Column: delivery_cost, Type: numeric, Nullable: NO, Length: N/A
+Column: delivery_person, Type: character varying, Nullable: NO, Length: 255
+Column: delivery_date, Type: date, Nullable: YES, Length: N/A
+Column: program_date, Type: date, Nullable: YES, Length: N/A
+Column: Payment_method, Type: character varying, Nullable: YES, Length: 255
+Column: Account_no, Type: character varying, Nullable: NO, Length: 255
+Column: Transection_no, Type: character varying, Nullable: NO, Length: 255
+Column: remarks, Type: text, Nullable: YES, Length: N/A
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: bill, Type: numeric, Nullable: NO, Length: N/A
+Column: due, Type: numeric, Nullable: NO, Length: N/A
+Column: discount, Type: numeric, Nullable: NO, Length: N/A
+Column: discountlimit, Type: numeric, Nullable: NO, Length: N/A
+Column: tax, Type: numeric, Nullable: NO, Length: N/A
+Column: costing, Type: numeric, Nullable: NO, Length: N/A
+Column: profit, Type: numeric, Nullable: NO, Length: N/A
+Column: payment, Type: numeric, Nullable: NO, Length: N/A
+Column: advance_payment, Type: numeric, Nullable: NO, Length: N/A
+Column: is_delivered, Type: boolean, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: Vat_issued_date, Type: date, Nullable: YES, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 255
+Column: address1, Type: text, Nullable: YES, Length: N/A
+Column: address2, Type: text, Nullable: YES, Length: N/A
+Column: country, Type: character varying, Nullable: YES, Length: 255
+Column: district, Type: character varying, Nullable: YES, Length: 255
+Column: postalCode, Type: character varying, Nullable: YES, Length: 255
+Column: thana, Type: character varying, Nullable: YES, Length: 255
+Column: s_phone, Type: character varying, Nullable: YES, Length: 255
+Column: shipping_method, Type: character varying, Nullable: YES, Length: 255
+Column: DeliveryType_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Sales_person_id, Type: bigint, Nullable: YES, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: cupon_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employe_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: refund, Type: numeric, Nullable: YES, Length: N/A
+Column: is_public, Type: boolean, Nullable: NO, Length: N/A
+Column: receive, Type: numeric, Nullable: YES, Length: N/A
+Column: additional_discount, Type: numeric, Nullable: YES, Length: N/A
+
+Table: order_invoice_item
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Details, Type: character varying, Nullable: YES, Length: 2000
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: price, Type: numeric, Nullable: NO, Length: N/A
+Column: purchase_price, Type: numeric, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: NO, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_invoice_item_copy
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Details, Type: character varying, Nullable: YES, Length: 2000
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: price, Type: numeric, Nullable: NO, Length: N/A
+Column: purchase_price, Type: numeric, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: is_exchanged, Type: boolean, Nullable: NO, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: NO, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_invoice_payment
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: bill, Type: numeric, Nullable: NO, Length: N/A
+Column: due, Type: numeric, Nullable: NO, Length: N/A
+Column: discount, Type: numeric, Nullable: NO, Length: N/A
+Column: tax, Type: numeric, Nullable: NO, Length: N/A
+Column: payment, Type: numeric, Nullable: NO, Length: N/A
+Column: advance_payment, Type: numeric, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: Sales_person_id, Type: bigint, Nullable: YES, Length: N/A
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: refund, Type: numeric, Nullable: YES, Length: N/A
+Column: receive, Type: numeric, Nullable: YES, Length: N/A
+
+Table: order_measurement
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Blouse, Type: boolean, Nullable: NO, Length: N/A
+Column: Kameez, Type: boolean, Nullable: NO, Length: N/A
+Column: Gown, Type: boolean, Nullable: NO, Length: N/A
+Column: Skirt, Type: boolean, Nullable: NO, Length: N/A
+Column: Paladzo, Type: boolean, Nullable: NO, Length: N/A
+Column: Pant, Type: boolean, Nullable: NO, Length: N/A
+Column: Gharara, Type: boolean, Nullable: NO, Length: N/A
+Column: Note, Type: text, Nullable: NO, Length: N/A
+Column: Chest, Type: character varying, Nullable: NO, Length: 255
+Column: Waist, Type: character varying, Nullable: NO, Length: 255
+Column: Hand_opening, Type: character varying, Nullable: NO, Length: 255
+Column: Hip, Type: character varying, Nullable: NO, Length: 255
+Column: Length, Type: character varying, Nullable: NO, Length: 255
+Column: End, Type: character varying, Nullable: NO, Length: 255
+Column: Slit, Type: character varying, Nullable: NO, Length: 255
+Column: Shoulder, Type: character varying, Nullable: NO, Length: 255
+Column: Neck_deep_f, Type: character varying, Nullable: NO, Length: 255
+Column: Arm_hole, Type: character varying, Nullable: NO, Length: 255
+Column: Neck_deep_b, Type: character varying, Nullable: NO, Length: 255
+Column: Sleeve_l, Type: character varying, Nullable: NO, Length: 255
+Column: Half_body, Type: character varying, Nullable: NO, Length: 255
+Column: Muscle, Type: character varying, Nullable: NO, Length: 255
+Column: Length_bottom, Type: character varying, Nullable: NO, Length: 255
+Column: Waist_bottom, Type: character varying, Nullable: NO, Length: 255
+Column: Hip_bottom, Type: character varying, Nullable: NO, Length: 255
+Column: Thigh, Type: character varying, Nullable: NO, Length: 255
+Column: Knee, Type: character varying, Nullable: NO, Length: 255
+Column: Leg_openning, Type: character varying, Nullable: NO, Length: 255
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: is_basic, Type: boolean, Nullable: NO, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: service_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_purchase
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: purchase_number, Type: character varying, Nullable: YES, Length: 255
+Column: reference, Type: character varying, Nullable: YES, Length: 255
+Column: delivery_method, Type: character varying, Nullable: YES, Length: 255
+Column: delivery_date, Type: date, Nullable: YES, Length: N/A
+Column: Payment_method, Type: character varying, Nullable: YES, Length: 255
+Column: Account_no, Type: character varying, Nullable: YES, Length: 255
+Column: remarks, Type: text, Nullable: YES, Length: N/A
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: bill, Type: numeric, Nullable: NO, Length: N/A
+Column: due, Type: numeric, Nullable: NO, Length: N/A
+Column: discount, Type: numeric, Nullable: NO, Length: N/A
+Column: costing, Type: numeric, Nullable: NO, Length: N/A
+Column: shipping, Type: numeric, Nullable: NO, Length: N/A
+Column: payment, Type: numeric, Nullable: NO, Length: N/A
+Column: adjustment, Type: numeric, Nullable: NO, Length: N/A
+Column: is_received, Type: boolean, Nullable: NO, Length: N/A
+Column: received_item, Type: numeric, Nullable: NO, Length: N/A
+Column: received_item_price, Type: numeric, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: tax_type, Type: character varying, Nullable: YES, Length: 255
+Column: status, Type: character varying, Nullable: YES, Length: 255
+Column: account_id, Type: bigint, Nullable: YES, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: employe_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+Column: refund_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_purchase_item
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Details, Type: character varying, Nullable: YES, Length: 2000
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: damage, Type: integer, Nullable: YES, Length: N/A
+Column: received, Type: integer, Nullable: YES, Length: N/A
+Column: price, Type: numeric, Nullable: YES, Length: N/A
+Column: landing_price, Type: numeric, Nullable: YES, Length: N/A
+Column: discount, Type: numeric, Nullable: YES, Length: N/A
+Column: tax, Type: numeric, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: purchase_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: order_refund
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: reason, Type: character varying, Nullable: NO, Length: 255
+Column: status, Type: character varying, Nullable: NO, Length: 255
+Column: deatils, Type: text, Nullable: NO, Length: N/A
+
+Table: order_services
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: details, Type: text, Nullable: NO, Length: N/A
+Column: price, Type: numeric, Nullable: NO, Length: N/A
+Column: cost, Type: numeric, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: profit, Type: numeric, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 255
+Column: remarks, Type: text, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: employe_id, Type: bigint, Nullable: YES, Length: N/A
+Column: invoice_id, Type: bigint, Nullable: YES, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_services_costing
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: details, Type: text, Nullable: NO, Length: N/A
+Column: cost, Type: numeric, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: remarks, Type: text, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: services_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: order_wordrobe
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: wordrobe_number, Type: character varying, Nullable: YES, Length: 255
+Column: reference, Type: character varying, Nullable: YES, Length: 255
+Column: company_name, Type: character varying, Nullable: YES, Length: 255
+Column: registered_Address, Type: text, Nullable: YES, Length: N/A
+Column: company_profile_link, Type: text, Nullable: YES, Length: N/A
+Column: photographer_name, Type: text, Nullable: YES, Length: N/A
+Column: model_name, Type: text, Nullable: YES, Length: N/A
+Column: makeup_artist_name, Type: text, Nullable: YES, Length: N/A
+Column: delivery_method, Type: character varying, Nullable: YES, Length: 255
+Column: delivery_date, Type: date, Nullable: YES, Length: N/A
+Column: Payment_method, Type: character varying, Nullable: YES, Length: 255
+Column: Account_no, Type: character varying, Nullable: YES, Length: 255
+Column: remarks, Type: text, Nullable: YES, Length: N/A
+Column: product_cost, Type: numeric, Nullable: NO, Length: N/A
+Column: rent, Type: numeric, Nullable: NO, Length: N/A
+Column: payment, Type: numeric, Nullable: NO, Length: N/A
+Column: due, Type: numeric, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: YES, Length: 255
+Column: is_returned, Type: boolean, Nullable: NO, Length: N/A
+Column: contact_id, Type: bigint, Nullable: YES, Length: N/A
+Column: location_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: order_wordrobe_item
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: Details, Type: character varying, Nullable: YES, Length: 2000
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: price, Type: numeric, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: created_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: updated_at, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: is_returned, Type: boolean, Nullable: NO, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: wordrobe_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: product_attribute
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: slug, Type: character varying, Nullable: YES, Length: 255
+Column: context, Type: character varying, Nullable: YES, Length: 255
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+
+Table: product_attributeterm
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: slug, Type: character varying, Nullable: YES, Length: 255
+Column: context, Type: character varying, Nullable: YES, Length: 255
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: Attribute_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: product_barcodeprintlist
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: challan_number, Type: character varying, Nullable: YES, Length: 255
+Column: comments, Type: text, Nullable: YES, Length: N/A
+Column: list_quantity, Type: integer, Nullable: YES, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: product_locations_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: product_category
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: slug, Type: character varying, Nullable: YES, Length: 255
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: Category_parent_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: product_productdetails
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: title, Type: character varying, Nullable: NO, Length: 255
+Column: slug, Type: character varying, Nullable: YES, Length: 255
+Column: Short_description, Type: text, Nullable: YES, Length: N/A
+Column: tags, Type: character varying, Nullable: YES, Length: 255
+Column: stock_unit, Type: character varying, Nullable: YES, Length: 255
+Column: stock_alart_amount, Type: integer, Nullable: YES, Length: N/A
+Column: height, Type: numeric, Nullable: YES, Length: N/A
+Column: width, Type: numeric, Nullable: YES, Length: N/A
+Column: weight, Type: numeric, Nullable: YES, Length: N/A
+Column: discount_type, Type: character varying, Nullable: YES, Length: 255
+Column: discount, Type: numeric, Nullable: YES, Length: N/A
+Column: tax, Type: numeric, Nullable: YES, Length: N/A
+Column: is_active, Type: boolean, Nullable: YES, Length: N/A
+Column: product_code, Type: character varying, Nullable: YES, Length: 255
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: min_price, Type: numeric, Nullable: NO, Length: N/A
+Column: max_price, Type: numeric, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: Category_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Merchandiser_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Sub_Category_id, Type: bigint, Nullable: YES, Length: N/A
+Column: product_discount, Type: numeric, Nullable: YES, Length: N/A
+Column: product_discount_price, Type: numeric, Nullable: NO, Length: N/A
+Column: product_discount_type, Type: character varying, Nullable: YES, Length: 255
+
+Table: product_productimage
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: photo, Type: character varying, Nullable: YES, Length: 100
+Column: is_active, Type: boolean, Nullable: YES, Length: N/A
+Column: Color_id, Type: bigint, Nullable: YES, Length: N/A
+Column: ProductDetails_id, Type: bigint, Nullable: YES, Length: N/A
+Column: ProductLocation_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: product_productlocation
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: description, Type: character varying, Nullable: YES, Length: 2000
+Column: Attribute_details, Type: character varying, Nullable: YES, Length: 2000
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: purchase_price, Type: numeric, Nullable: NO, Length: N/A
+Column: selling_price, Type: numeric, Nullable: NO, Length: N/A
+Column: price, Type: numeric, Nullable: NO, Length: N/A
+Column: barcode, Type: character varying, Nullable: YES, Length: 255
+Column: ProductDetails_id, Type: bigint, Nullable: YES, Length: N/A
+Column: Warehouse_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: product_productlocation_Attributes
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: productlocation_id, Type: bigint, Nullable: NO, Length: N/A
+Column: attributeterm_id, Type: bigint, Nullable: NO, Length: N/A
+
+Table: product_productlocationentry
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: NO, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: ProductLocation_id, Type: bigint, Nullable: YES, Length: N/A
+Column: remarks, Type: character varying, Nullable: YES, Length: 2000
+
+Table: product_transfer
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: reference, Type: character varying, Nullable: YES, Length: 255
+Column: tansfer_number, Type: character varying, Nullable: YES, Length: 255
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: status, Type: character varying, Nullable: NO, Length: 255
+Column: deatils, Type: character varying, Nullable: NO, Length: 2550
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: destance_id, Type: bigint, Nullable: YES, Length: N/A
+Column: source_id, Type: bigint, Nullable: YES, Length: N/A
+Column: created, Type: timestamp with time zone, Nullable: NO, Length: N/A
+
+Table: product_transfer_item
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: quantity, Type: integer, Nullable: YES, Length: N/A
+Column: is_received, Type: boolean, Nullable: YES, Length: N/A
+Column: issue_date, Type: date, Nullable: NO, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: product_id, Type: bigint, Nullable: YES, Length: N/A
+Column: transfer_id, Type: bigint, Nullable: YES, Length: N/A
+Column: is_returned, Type: boolean, Nullable: YES, Length: N/A
+
+Table: product_warehouse
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: logo, Type: character varying, Nullable: YES, Length: 100
+Column: logoWidth, Type: character varying, Nullable: YES, Length: 500
+Column: logoHeight, Type: character varying, Nullable: YES, Length: 500
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: address, Type: character varying, Nullable: YES, Length: 500
+Column: contact, Type: character varying, Nullable: YES, Length: 500
+Column: petty_cash, Type: numeric, Nullable: NO, Length: N/A
+Column: cash, Type: numeric, Nullable: NO, Length: N/A
+Column: is_outlet, Type: boolean, Nullable: YES, Length: N/A
+Column: is_office, Type: boolean, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+Column: Warehouse_parent_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: software_settings_business_settings
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: logo, Type: character varying, Nullable: YES, Length: 100
+Column: signature, Type: character varying, Nullable: YES, Length: 100
+Column: wordrobe_terms, Type: text, Nullable: YES, Length: N/A
+Column: invoice_terms, Type: text, Nullable: YES, Length: N/A
+Column: challan_terms, Type: text, Nullable: YES, Length: N/A
+Column: address, Type: text, Nullable: YES, Length: N/A
+Column: data, Type: jsonb, Nullable: YES, Length: N/A
+
+Table: software_settings_module
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+
+Table: software_settings_sub_module
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: name, Type: character varying, Nullable: NO, Length: 255
+Column: module_id, Type: bigint, Nullable: YES, Length: N/A
+
+Table: userlog_userlog
+------------------------------
+Column: id, Type: bigint, Nullable: NO, Length: N/A
+Column: action, Type: text, Nullable: NO, Length: N/A
+Column: action_type, Type: character varying, Nullable: YES, Length: 2550
+Column: action_data, Type: text, Nullable: YES, Length: N/A
+Column: timestamp, Type: timestamp with time zone, Nullable: NO, Length: N/A
+Column: object_id, Type: character varying, Nullable: NO, Length: 2550
+Column: content_type_id, Type: integer, Nullable: YES, Length: N/A
+Column: user_id, Type: bigint, Nullable: NO, Length: N/A
+
+Primary Keys:
+Table: accounting_account, Column: id
+Table: accounting_accountparent, Column: id
+Table: accounting_accountstatusbydate, Column: id
+Table: accounting_chartofaccount, Column: id
+Table: accounting_contravoucher, Column: id
+Table: accounting_journal, Column: id
+Table: accounting_journalvoucher, Column: id
+Table: accounting_journalvoucheritems, Column: id
+Table: accounting_paymentvoucher, Column: id
+Table: accounting_paymentvoucheritems, Column: id
+Table: accounting_pettycash, Column: id
+Table: accounting_pettycash_transfer, Column: id
+Table: accounting_receivevoucher, Column: id
+Table: accounting_receivevoucheritems, Column: id
+Table: admin_interface_theme, Column: id
+Table: auth_group_permissions, Column: id
+Table: auth_group, Column: id
+Table: auth_permission, Column: id
+Table: authtoken_token, Column: key
+Table: contact_contact, Column: id
+Table: contact_contacttype, Column: id
+Table: contact_userprofile_groups, Column: id
+Table: contact_userprofile, Column: id
+Table: contact_userprofile_user_permissions, Column: id
+Table: django_admin_log, Column: id
+Table: django_content_type, Column: id
+Table: django_migrations, Column: id
+Table: django_session, Column: session_key
+Table: django_site, Column: id
+Table: hrm_attendance, Column: id
+Table: hrm_company, Column: id
+Table: hrm_department, Column: id
+Table: hrm_designation, Column: id
+Table: hrm_employee, Column: id
+Table: hrm_employeedocument, Column: id
+Table: hrm_employeeleave, Column: id
+Table: hrm_groupofcompany, Column: id
+Table: hrm_increamentpolicy, Column: id
+Table: hrm_leavetype, Column: id
+Table: hrm_loan, Column: id
+Table: hrm_loanpayment, Column: id
+Table: hrm_office_Department, Column: id
+Table: hrm_office, Column: id
+Table: hrm_officelocation, Column: id
+Table: hrm_officetype, Column: id
+Table: hrm_payslip, Column: id
+Table: hrm_permission, Column: id
+Table: hrm_salary, Column: id
+Table: hrm_salarypayment, Column: id
+Table: manufacturing_manufacture_cost, Column: id
+Table: manufacturing_manufacturingrecord, Column: id
+Table: manufacturing_productionline_item, Column: id
+Table: manufacturing_productionline, Column: id
+Table: manufacturing_qualitytest, Column: id
+Table: manufacturing_qualityteststatus, Column: id
+Table: manufacturing_workorder, Column: id
+Table: manufacturing_workorderitem_Attributes, Column: id
+Table: manufacturing_workorderitem, Column: id
+Table: manufacturing_workstation, Column: id
+Table: manufacturing_workstationitems, Column: id
+Table: manufacturing_workstationstatus, Column: id
+Table: notifications_notification, Column: id
+Table: order_cupon, Column: id
+Table: order_deliverytype, Column: id
+Table: order_draftcostsheet, Column: id
+Table: order_draftimage, Column: id
+Table: order_draftorder, Column: id
+Table: order_exchange, Column: id
+Table: order_invoice_item, Column: id
+Table: order_invoice_payment, Column: id
+Table: order_invoice, Column: id
+Table: order_measurement, Column: id
+Table: order_purchase_item, Column: id
+Table: order_purchase, Column: id
+Table: order_refund, Column: id
+Table: order_services_costing, Column: id
+Table: order_services, Column: id
+Table: order_wordrobe_item, Column: id
+Table: order_wordrobe, Column: id
+Table: product_attribute, Column: id
+Table: product_attributeterm, Column: id
+Table: product_barcodeprintlist, Column: id
+Table: product_category, Column: id
+Table: product_productdetails, Column: id
+Table: product_productimage, Column: id
+Table: product_productlocation_Attributes, Column: id
+Table: product_productlocation, Column: id
+Table: product_productlocationentry, Column: id
+Table: product_transfer_item, Column: id
+Table: product_transfer, Column: id
+Table: product_warehouse, Column: id
+Table: software_settings_business_settings, Column: id
+Table: software_settings_module, Column: id
+Table: software_settings_sub_module, Column: id
+Table: userlog_userlog, Column: id
+Table: order_invoice_item_copy, Column: id
+Table: contact_appointment, Column: id
+Table: contact_service, Column: id
+Table: contact_serviceschedule, Column: id
+Table: contact_review, Column: id
+Table: contact_notification, Column: id
+Table: contact_availability, Column: id

@@ -28,35 +28,35 @@ def get_stock_price(symbol: str):
         "price": round(price, 2),"currency": "USD" , "message": "Here is the stock price for today!"
         }
 
-# result = stock_agent.run_sync("what is ACI Ltd stock price")
-# print(f"Message: {result.data.message}")
-# print(f"Message: {result.data}")
-# print(f"Stock Price: {result.data.price:.2f} {result.data.currency}")
+result = stock_agent.run_sync("what is Apple stock price?")
+print(f"Message: {result.data.message}")
+print(f"Message: {result.data}")
+print(f"Stock Price: {result.data.price:.2f} {result.data.currency}")
 
 
-def get_stock_info(query):
-    try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        result = loop.run_until_complete(stock_agent.run(query))
-        
-        # result = stock_agent.run_sync(query)
-        response = f"Stock:{result.data.symbol} \n"
-        response = f"Currency:{result.data.currency} \n"
-        response = f"Price:{result.data.price:.2f} \n"
-        response = f"Message:{result.data.message} \n"
-        return response 
-    except Exception as e:
-        return f"Error: {str(e)}"
+# def get_stock_info(query):
+#     try:
+#         loop = asyncio.new_event_loop()
+#         asyncio.set_event_loop(loop)
+#         result = loop.run_until_complete(stock_agent.run(query))
 
-demo = gr.Interface(
-    fn=get_stock_info,
-    inputs=gr.Textbox(label="Ask Any Stock info"),
-    outputs=gr.Textbox(label="Stock Info"),
-    # layout=gr.Layout(padding=10),
-    title="Stock Market Data",
-    description="Get the stock market data for any company",
-)    
+#         # result = stock_agent.run_sync(query)
+#         response = f"Stock:{result.data.symbol} \n"
+#         response = f"Currency:{result.data.currency} \n"
+#         response = f"Price:{result.data.price:.2f} \n"
+#         response = f"Message:{result.data.message} \n"
+#         return response 
+#     except Exception as e:
+#         return f"Error: {str(e)}"
 
-if __name__ == '__main__':
-    demo.launch()
+# demo = gr.Interface(
+#     fn=get_stock_info,
+#     inputs=gr.Textbox(label="Ask Any Stock info"),
+#     outputs=gr.Textbox(label="Stock Info"),
+#     # layout=gr.Layout(padding=10),
+#     title="Stock Market Data",
+#     description="Get the stock market data for any company",
+# )    
+
+# if __name__ == '__main__':
+#     demo.launch()
