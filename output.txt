@@ -1,0 +1,4737 @@
+Connecting to the database...
+Database schema fetched successfully.
+Generating Pydantic models...
+
+Pydantic Model for Table accounting_chartofaccount:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "account_name": {
+      "title": "Account Name",
+      "type": "string"
+    },
+    "account_code": {
+      "title": "Account Code",
+      "type": "string"
+    },
+    "Financial_statement": {
+      "title": "Financial Statement",
+      "type": "string"
+    },
+    "normally_Debit": {
+      "title": "Normally Debit",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "group_id": {
+      "title": "Group Id",
+      "type": "string"
+    },
+    "sub_group_id": {
+      "title": "Sub Group Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_chartofaccount",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_contravoucher:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "voucher_number": {
+      "title": "Voucher Number",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "referance": {
+      "title": "Referance",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "accountFrom_id": {
+      "title": "Accountfrom Id",
+      "type": "string"
+    },
+    "accountTo_id": {
+      "title": "Accountto Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_contravoucher",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_accountstatusbydate:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_accountstatusbydate",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_journal:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "voucher_type": {
+      "title": "Voucher Type",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "increase": {
+      "title": "Increase",
+      "type": "string"
+    },
+    "is_checked": {
+      "title": "Is Checked",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "chartofaccount_id": {
+      "title": "Chartofaccount Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employe_id": {
+      "title": "Employe Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "loan_id": {
+      "title": "Loan Id",
+      "type": "string"
+    },
+    "outlet_id": {
+      "title": "Outlet Id",
+      "type": "string"
+    },
+    "payslip_id": {
+      "title": "Payslip Id",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    },
+    "transfer_id": {
+      "title": "Transfer Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_journal",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_journalvoucher:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "voucher_number": {
+      "title": "Voucher Number",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "referance": {
+      "title": "Referance",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "debit": {
+      "title": "Debit",
+      "type": "string"
+    },
+    "credit": {
+      "title": "Credit",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_journalvoucher",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_journalvoucheritems:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "increase": {
+      "title": "Increase",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "chartofaccount_id": {
+      "title": "Chartofaccount Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "journalvoucher_id": {
+      "title": "Journalvoucher Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_journalvoucheritems",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_paymentvoucher:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "voucher_number": {
+      "title": "Voucher Number",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "referance": {
+      "title": "Referance",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_paymentvoucher",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_paymentvoucheritems:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "increase": {
+      "title": "Increase",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "chartofaccount_id": {
+      "title": "Chartofaccount Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "paymentvoucher_id": {
+      "title": "Paymentvoucher Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_paymentvoucheritems",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_accountparent:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Type": {
+      "title": "Type",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_accountparent",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_receivevoucher:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "voucher_number": {
+      "title": "Voucher Number",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "referance": {
+      "title": "Referance",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_receivevoucher",
+  "type": "object"
+}
+
+Pydantic Model for Table admin_interface_theme:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "active": {
+      "title": "Active",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "title_visible": {
+      "title": "Title Visible",
+      "type": "string"
+    },
+    "logo": {
+      "title": "Logo",
+      "type": "string"
+    },
+    "logo_visible": {
+      "title": "Logo Visible",
+      "type": "string"
+    },
+    "css_header_background_color": {
+      "title": "Css Header Background Color",
+      "type": "string"
+    },
+    "title_color": {
+      "title": "Title Color",
+      "type": "string"
+    },
+    "css_header_text_color": {
+      "title": "Css Header Text Color",
+      "type": "string"
+    },
+    "css_header_link_color": {
+      "title": "Css Header Link Color",
+      "type": "string"
+    },
+    "css_header_link_hover_color": {
+      "title": "Css Header Link Hover Color",
+      "type": "string"
+    },
+    "css_module_background_color": {
+      "title": "Css Module Background Color",
+      "type": "string"
+    },
+    "css_module_text_color": {
+      "title": "Css Module Text Color",
+      "type": "string"
+    },
+    "css_module_link_color": {
+      "title": "Css Module Link Color",
+      "type": "string"
+    },
+    "css_module_link_hover_color": {
+      "title": "Css Module Link Hover Color",
+      "type": "string"
+    },
+    "css_module_rounded_corners": {
+      "title": "Css Module Rounded Corners",
+      "type": "string"
+    },
+    "css_generic_link_color": {
+      "title": "Css Generic Link Color",
+      "type": "string"
+    },
+    "css_generic_link_hover_color": {
+      "title": "Css Generic Link Hover Color",
+      "type": "string"
+    },
+    "css_save_button_background_color": {
+      "title": "Css Save Button Background Color",
+      "type": "string"
+    },
+    "css_save_button_background_hover_color": {
+      "title": "Css Save Button Background Hover Color",
+      "type": "string"
+    },
+    "css_save_button_text_color": {
+      "title": "Css Save Button Text Color",
+      "type": "string"
+    },
+    "css_delete_button_background_color": {
+      "title": "Css Delete Button Background Color",
+      "type": "string"
+    },
+    "css_delete_button_background_hover_color": {
+      "title": "Css Delete Button Background Hover Color",
+      "type": "string"
+    },
+    "css_delete_button_text_color": {
+      "title": "Css Delete Button Text Color",
+      "type": "string"
+    },
+    "list_filter_dropdown": {
+      "title": "List Filter Dropdown",
+      "type": "string"
+    },
+    "related_modal_active": {
+      "title": "Related Modal Active",
+      "type": "string"
+    },
+    "related_modal_background_color": {
+      "title": "Related Modal Background Color",
+      "type": "string"
+    },
+    "related_modal_rounded_corners": {
+      "title": "Related Modal Rounded Corners",
+      "type": "string"
+    },
+    "logo_color": {
+      "title": "Logo Color",
+      "type": "string"
+    },
+    "recent_actions_visible": {
+      "title": "Recent Actions Visible",
+      "type": "string"
+    },
+    "favicon": {
+      "title": "Favicon",
+      "type": "string"
+    },
+    "related_modal_background_opacity": {
+      "title": "Related Modal Background Opacity",
+      "type": "string"
+    },
+    "env_name": {
+      "title": "Env Name",
+      "type": "string"
+    },
+    "env_visible_in_header": {
+      "title": "Env Visible In Header",
+      "type": "string"
+    },
+    "env_color": {
+      "title": "Env Color",
+      "type": "string"
+    },
+    "env_visible_in_favicon": {
+      "title": "Env Visible In Favicon",
+      "type": "string"
+    },
+    "related_modal_close_button_visible": {
+      "title": "Related Modal Close Button Visible",
+      "type": "string"
+    },
+    "language_chooser_active": {
+      "title": "Language Chooser Active",
+      "type": "string"
+    },
+    "language_chooser_display": {
+      "title": "Language Chooser Display",
+      "type": "string"
+    },
+    "list_filter_sticky": {
+      "title": "List Filter Sticky",
+      "type": "string"
+    },
+    "form_pagination_sticky": {
+      "title": "Form Pagination Sticky",
+      "type": "string"
+    },
+    "form_submit_sticky": {
+      "title": "Form Submit Sticky",
+      "type": "string"
+    },
+    "css_module_background_selected_color": {
+      "title": "Css Module Background Selected Color",
+      "type": "string"
+    },
+    "css_module_link_selected_color": {
+      "title": "Css Module Link Selected Color",
+      "type": "string"
+    },
+    "logo_max_height": {
+      "title": "Logo Max Height",
+      "type": "string"
+    },
+    "logo_max_width": {
+      "title": "Logo Max Width",
+      "type": "string"
+    },
+    "foldable_apps": {
+      "title": "Foldable Apps",
+      "type": "string"
+    },
+    "language_chooser_control": {
+      "title": "Language Chooser Control",
+      "type": "string"
+    },
+    "list_filter_highlight": {
+      "title": "List Filter Highlight",
+      "type": "string"
+    },
+    "list_filter_removal_links": {
+      "title": "List Filter Removal Links",
+      "type": "string"
+    },
+    "show_fieldsets_as_tabs": {
+      "title": "Show Fieldsets As Tabs",
+      "type": "string"
+    },
+    "show_inlines_as_tabs": {
+      "title": "Show Inlines As Tabs",
+      "type": "string"
+    },
+    "css_generic_link_active_color": {
+      "title": "Css Generic Link Active Color",
+      "type": "string"
+    },
+    "collapsible_stacked_inlines": {
+      "title": "Collapsible Stacked Inlines",
+      "type": "string"
+    },
+    "collapsible_stacked_inlines_collapsed": {
+      "title": "Collapsible Stacked Inlines Collapsed",
+      "type": "string"
+    },
+    "collapsible_tabular_inlines": {
+      "title": "Collapsible Tabular Inlines",
+      "type": "string"
+    },
+    "collapsible_tabular_inlines_collapsed": {
+      "title": "Collapsible Tabular Inlines Collapsed",
+      "type": "string"
+    }
+  },
+  "title": "Admin_interface_theme",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_pettycash:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "increase": {
+      "title": "Increase",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_pettycash",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_receivevoucheritems:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "narration": {
+      "title": "Narration",
+      "type": "string"
+    },
+    "increase": {
+      "title": "Increase",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "chartofaccount_id": {
+      "title": "Chartofaccount Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "purchasee_id": {
+      "title": "Purchasee Id",
+      "type": "string"
+    },
+    "receivevoucher_id": {
+      "title": "Receivevoucher Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_receivevoucheritems",
+  "type": "object"
+}
+
+Pydantic Model for Table auth_group:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "title": "Auth_group",
+  "type": "object"
+}
+
+Pydantic Model for Table django_content_type:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "app_label": {
+      "title": "App Label",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    }
+  },
+  "title": "Django_content_type",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_userprofile_user_permissions:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "userprofile_id": {
+      "title": "Userprofile Id",
+      "type": "string"
+    },
+    "permission_id": {
+      "title": "Permission Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_userprofile_user_permissions",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_contacttype:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Type": {
+      "title": "Type",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "cupon_name": {
+      "title": "Cupon Name",
+      "type": "string"
+    }
+  },
+  "title": "Contact_contacttype",
+  "type": "object"
+}
+
+Pydantic Model for Table django_migrations:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "app": {
+      "title": "App",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "applied": {
+      "title": "Applied",
+      "type": "string"
+    }
+  },
+  "title": "Django_migrations",
+  "type": "object"
+}
+
+Pydantic Model for Table django_session:
+{
+  "properties": {
+    "session_key": {
+      "title": "Session Key",
+      "type": "string"
+    },
+    "session_data": {
+      "title": "Session Data",
+      "type": "string"
+    },
+    "expire_date": {
+      "title": "Expire Date",
+      "type": "string"
+    }
+  },
+  "title": "Django_session",
+  "type": "object"
+}
+
+Pydantic Model for Table django_site:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "domain": {
+      "title": "Domain",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "title": "Django_site",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_contact:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "email": {
+      "title": "Email",
+      "type": "string"
+    },
+    "phone": {
+      "title": "Phone",
+      "type": "string"
+    },
+    "emergency_contact": {
+      "title": "Emergency Contact",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "Type": {
+      "title": "Type",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    },
+    "account_balance": {
+      "title": "Account Balance",
+      "type": "string"
+    },
+    "points": {
+      "title": "Points",
+      "type": "string"
+    },
+    "Special_Date_Type": {
+      "title": "Special Date Type",
+      "type": "string"
+    },
+    "special_dates": {
+      "title": "Special Dates",
+      "type": "string"
+    },
+    "is_active": {
+      "title": "Is Active",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "role_id": {
+      "title": "Role Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_contact",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_userprofile:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "password": {
+      "title": "Password",
+      "type": "string"
+    },
+    "last_login": {
+      "title": "Last Login",
+      "type": "string"
+    },
+    "is_superuser": {
+      "title": "Is Superuser",
+      "type": "string"
+    },
+    "email": {
+      "title": "Email",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "is_active": {
+      "title": "Is Active",
+      "type": "string"
+    },
+    "is_staff": {
+      "title": "Is Staff",
+      "type": "string"
+    },
+    "branch_id": {
+      "title": "Branch Id",
+      "type": "string"
+    },
+    "user_role_id": {
+      "title": "User Role Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_userprofile",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_userprofile_groups:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "userprofile_id": {
+      "title": "Userprofile Id",
+      "type": "string"
+    },
+    "group_id": {
+      "title": "Group Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_userprofile_groups",
+  "type": "object"
+}
+
+Pydantic Model for Table django_admin_log:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "action_time": {
+      "title": "Action Time",
+      "type": "string"
+    },
+    "object_id": {
+      "title": "Object Id",
+      "type": "string"
+    },
+    "object_repr": {
+      "title": "Object Repr",
+      "type": "string"
+    },
+    "action_flag": {
+      "title": "Action Flag",
+      "type": "string"
+    },
+    "change_message": {
+      "title": "Change Message",
+      "type": "string"
+    },
+    "content_type_id": {
+      "title": "Content Type Id",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "title": "Django_admin_log",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_attendance:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "attendanceDate": {
+      "title": "Attendancedate",
+      "type": "string"
+    },
+    "shift": {
+      "title": "Shift",
+      "type": "string"
+    },
+    "isAttended": {
+      "title": "Isattended",
+      "type": "string"
+    },
+    "entryTime": {
+      "title": "Entrytime",
+      "type": "string"
+    },
+    "exitTime": {
+      "title": "Exittime",
+      "type": "string"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "overTime": {
+      "title": "Overtime",
+      "type": "string"
+    },
+    "lateTime": {
+      "title": "Latetime",
+      "type": "string"
+    },
+    "isLate": {
+      "title": "Islate",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_attendance",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_designation:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "rank": {
+      "title": "Rank",
+      "type": "string"
+    },
+    "responsibility": {
+      "title": "Responsibility",
+      "type": "string"
+    },
+    "Department_id": {
+      "title": "Department Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_designation",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_leavetype:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Typename": {
+      "title": "Typename",
+      "type": "string"
+    },
+    "initialDays": {
+      "title": "Initialdays",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_leavetype",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_employee:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "photo": {
+      "title": "Photo",
+      "type": "string"
+    },
+    "phone": {
+      "title": "Phone",
+      "type": "string"
+    },
+    "emergency_phone": {
+      "title": "Emergency Phone",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "defaultShift": {
+      "title": "Defaultshift",
+      "type": "string"
+    },
+    "defaultEntryTime": {
+      "title": "Defaultentrytime",
+      "type": "string"
+    },
+    "defaultExitTime": {
+      "title": "Defaultexittime",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "Designation_id": {
+      "title": "Designation Id",
+      "type": "string"
+    },
+    "Office_id": {
+      "title": "Office Id",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_employee",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_groupofcompany:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_groupofcompany",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_department:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "rank": {
+      "title": "Rank",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_department",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_employeedocument:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "file": {
+      "title": "File",
+      "type": "string"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_employeedocument",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_employeeleave:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "leaveStart": {
+      "title": "Leavestart",
+      "type": "string"
+    },
+    "leaveEnd": {
+      "title": "Leaveend",
+      "type": "string"
+    },
+    "leaveDays": {
+      "title": "Leavedays",
+      "type": "string"
+    },
+    "leaveStatus": {
+      "title": "Leavestatus",
+      "type": "string"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "leaveType_id": {
+      "title": "Leavetype Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_employeeleave",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_increamentpolicy:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_increamentpolicy",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_payslip:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "salaryMonth": {
+      "title": "Salarymonth",
+      "type": "string"
+    },
+    "salaryYear": {
+      "title": "Salaryyear",
+      "type": "string"
+    },
+    "publicHoliday": {
+      "title": "Publicholiday",
+      "type": "string"
+    },
+    "leave": {
+      "title": "Leave",
+      "type": "string"
+    },
+    "present": {
+      "title": "Present",
+      "type": "string"
+    },
+    "absent": {
+      "title": "Absent",
+      "type": "string"
+    },
+    "late": {
+      "title": "Late",
+      "type": "string"
+    },
+    "dayOverTime": {
+      "title": "Dayovertime",
+      "type": "string"
+    },
+    "nightOverTime": {
+      "title": "Nightovertime",
+      "type": "string"
+    },
+    "overtimeTotal": {
+      "title": "Overtimetotal",
+      "type": "string"
+    },
+    "incentiveTotal": {
+      "title": "Incentivetotal",
+      "type": "string"
+    },
+    "dailyAllowanceTotal": {
+      "title": "Dailyallowancetotal",
+      "type": "string"
+    },
+    "fine": {
+      "title": "Fine",
+      "type": "string"
+    },
+    "loan_adjustment": {
+      "title": "Loan Adjustment",
+      "type": "string"
+    },
+    "advance_adjustment": {
+      "title": "Advance Adjustment",
+      "type": "string"
+    },
+    "net_salary": {
+      "title": "Net Salary",
+      "type": "string"
+    },
+    "payment": {
+      "title": "Payment",
+      "type": "string"
+    },
+    "due": {
+      "title": "Due",
+      "type": "string"
+    },
+    "amount_1": {
+      "title": "Amount 1",
+      "type": "string"
+    },
+    "payment_method_info_1": {
+      "title": "Payment Method Info 1",
+      "type": "string"
+    },
+    "amount_2": {
+      "title": "Amount 2",
+      "type": "string"
+    },
+    "payment_method_info_2": {
+      "title": "Payment Method Info 2",
+      "type": "string"
+    },
+    "paymentDate": {
+      "title": "Paymentdate",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "payment_method_1_id": {
+      "title": "Payment Method 1 Id",
+      "type": "string"
+    },
+    "payment_method_2_id": {
+      "title": "Payment Method 2 Id",
+      "type": "string"
+    },
+    "salary_id": {
+      "title": "Salary Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_payslip",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_office_Department:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "office_id": {
+      "title": "Office Id",
+      "type": "string"
+    },
+    "department_id": {
+      "title": "Department Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_office_department",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_permission:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "is_create": {
+      "title": "Is Create",
+      "type": "string"
+    },
+    "is_read": {
+      "title": "Is Read",
+      "type": "string"
+    },
+    "is_update": {
+      "title": "Is Update",
+      "type": "string"
+    },
+    "is_delete": {
+      "title": "Is Delete",
+      "type": "string"
+    },
+    "Designation_id": {
+      "title": "Designation Id",
+      "type": "string"
+    },
+    "module_id": {
+      "title": "Module Id",
+      "type": "string"
+    },
+    "sub_module_id": {
+      "title": "Sub Module Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_permission",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_officelocation:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "OfficeLocation_parent_id": {
+      "title": "Officelocation Parent Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_officelocation",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_officetype:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "rank": {
+      "title": "Rank",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_officetype",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_salary:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "monthlySalary": {
+      "title": "Monthlysalary",
+      "type": "string"
+    },
+    "dailyAllowance": {
+      "title": "Dailyallowance",
+      "type": "string"
+    },
+    "incentive": {
+      "title": "Incentive",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_salary",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_productionline:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "line_name": {
+      "title": "Line Name",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "location": {
+      "title": "Location",
+      "type": "string"
+    },
+    "capacity": {
+      "title": "Capacity",
+      "type": "string"
+    },
+    "start_date": {
+      "title": "Start Date",
+      "type": "string"
+    },
+    "end_date": {
+      "title": "End Date",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "capacity_consumed": {
+      "title": "Capacity Consumed",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_productionline",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_workorder:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "order_name": {
+      "title": "Order Name",
+      "type": "string"
+    },
+    "order_number": {
+      "title": "Order Number",
+      "type": "string"
+    },
+    "start_date": {
+      "title": "Start Date",
+      "type": "string"
+    },
+    "end_date": {
+      "title": "End Date",
+      "type": "string"
+    },
+    "quantity_needed": {
+      "title": "Quantity Needed",
+      "type": "string"
+    },
+    "total_cost": {
+      "title": "Total Cost",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "Product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "draft_cost_sheet_id": {
+      "title": "Draft Cost Sheet Id",
+      "type": "string"
+    },
+    "quantity_complete": {
+      "title": "Quantity Complete",
+      "type": "string"
+    },
+    "quantity_damaged": {
+      "title": "Quantity Damaged",
+      "type": "string"
+    },
+    "quantity_pending": {
+      "title": "Quantity Pending",
+      "type": "string"
+    },
+    "service_id": {
+      "title": "Service Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_workorder",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_workorderitem:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "quantity_needed": {
+      "title": "Quantity Needed",
+      "type": "string"
+    },
+    "Workorder_id": {
+      "title": "Workorder Id",
+      "type": "string"
+    },
+    "quantity_complete": {
+      "title": "Quantity Complete",
+      "type": "string"
+    },
+    "quantity_damaged": {
+      "title": "Quantity Damaged",
+      "type": "string"
+    },
+    "quantity_pending": {
+      "title": "Quantity Pending",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_workorderitem",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_productionline_item:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "capacity": {
+      "title": "Capacity",
+      "type": "string"
+    },
+    "start_date": {
+      "title": "Start Date",
+      "type": "string"
+    },
+    "end_date": {
+      "title": "End Date",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "ProductionLine_id": {
+      "title": "Productionline Id",
+      "type": "string"
+    },
+    "WorkOrderItem_id": {
+      "title": "Workorderitem Id",
+      "type": "string"
+    },
+    "Workorder_id": {
+      "title": "Workorder Id",
+      "type": "string"
+    },
+    "quantity_complete": {
+      "title": "Quantity Complete",
+      "type": "string"
+    },
+    "quantity_damaged": {
+      "title": "Quantity Damaged",
+      "type": "string"
+    },
+    "quantity_pending": {
+      "title": "Quantity Pending",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_productionline_item",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_manufacturingrecord:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "start_date": {
+      "title": "Start Date",
+      "type": "string"
+    },
+    "end_date": {
+      "title": "End Date",
+      "type": "string"
+    },
+    "notes": {
+      "title": "Notes",
+      "type": "string"
+    },
+    "line_id": {
+      "title": "Line Id",
+      "type": "string"
+    },
+    "order_id": {
+      "title": "Order Id",
+      "type": "string"
+    },
+    "workstation_id": {
+      "title": "Workstation Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_manufacturingrecord",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_workorderitem_Attributes:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "workorderitem_id": {
+      "title": "Workorderitem Id",
+      "type": "string"
+    },
+    "attributeterm_id": {
+      "title": "Attributeterm Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_workorderitem_attributes",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_workstation:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "workstation_name": {
+      "title": "Workstation Name",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_workstation",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_salarypayment:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "paidAmount": {
+      "title": "Paidamount",
+      "type": "string"
+    },
+    "salaryMonth": {
+      "title": "Salarymonth",
+      "type": "string"
+    },
+    "salaryYear": {
+      "title": "Salaryyear",
+      "type": "string"
+    },
+    "paymentDate": {
+      "title": "Paymentdate",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_salarypayment",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_manufacture_cost:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "type": {
+      "title": "Type",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "unit_name": {
+      "title": "Unit Name",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "cost_per_unit": {
+      "title": "Cost Per Unit",
+      "type": "string"
+    },
+    "total_cost": {
+      "title": "Total Cost",
+      "type": "string"
+    },
+    "Product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "ProductLocation_id": {
+      "title": "Productlocation Id",
+      "type": "string"
+    },
+    "ProductionLine_id": {
+      "title": "Productionline Id",
+      "type": "string"
+    },
+    "ProductionLine_item_id": {
+      "title": "Productionline Item Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_manufacture_cost",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_qualityteststatus:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "ProductionLine_item_id": {
+      "title": "Productionline Item Id",
+      "type": "string"
+    },
+    "order_id": {
+      "title": "Order Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_qualityteststatus",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_qualitytest:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "test_date": {
+      "title": "Test Date",
+      "type": "string"
+    },
+    "pass_fail_status": {
+      "title": "Pass Fail Status",
+      "type": "string"
+    },
+    "notes": {
+      "title": "Notes",
+      "type": "string"
+    },
+    "test_type_id": {
+      "title": "Test Type Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_qualitytest",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_workstationitems:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "ProductionLine_id": {
+      "title": "Productionline Id",
+      "type": "string"
+    },
+    "Workstation_id": {
+      "title": "Workstation Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_workstationitems",
+  "type": "object"
+}
+
+Pydantic Model for Table manufacturing_workstationstatus:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "task_name": {
+      "title": "Task Name",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "workstation_id": {
+      "title": "Workstation Id",
+      "type": "string"
+    }
+  },
+  "title": "Manufacturing_workstationstatus",
+  "type": "object"
+}
+
+Pydantic Model for Table notifications_notification:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "level": {
+      "title": "Level",
+      "type": "string"
+    },
+    "unread": {
+      "title": "Unread",
+      "type": "string"
+    },
+    "actor_object_id": {
+      "title": "Actor Object Id",
+      "type": "string"
+    },
+    "verb": {
+      "title": "Verb",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "target_object_id": {
+      "title": "Target Object Id",
+      "type": "string"
+    },
+    "action_object_object_id": {
+      "title": "Action Object Object Id",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "public": {
+      "title": "Public",
+      "type": "string"
+    },
+    "action_object_content_type_id": {
+      "title": "Action Object Content Type Id",
+      "type": "string"
+    },
+    "actor_content_type_id": {
+      "title": "Actor Content Type Id",
+      "type": "string"
+    },
+    "recipient_id": {
+      "title": "Recipient Id",
+      "type": "string"
+    },
+    "target_content_type_id": {
+      "title": "Target Content Type Id",
+      "type": "string"
+    },
+    "deleted": {
+      "title": "Deleted",
+      "type": "string"
+    },
+    "emailed": {
+      "title": "Emailed",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    }
+  },
+  "title": "Notifications_notification",
+  "type": "object"
+}
+
+Pydantic Model for Table order_cupon:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "start": {
+      "title": "Start",
+      "type": "string"
+    },
+    "end": {
+      "title": "End",
+      "type": "string"
+    },
+    "limit_type": {
+      "title": "Limit Type",
+      "type": "string"
+    },
+    "limit": {
+      "title": "Limit",
+      "type": "string"
+    },
+    "ref_type": {
+      "title": "Ref Type",
+      "type": "string"
+    }
+  },
+  "title": "Order_cupon",
+  "type": "object"
+}
+
+Pydantic Model for Table order_draftimage:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "product_image": {
+      "title": "Product Image",
+      "type": "string"
+    },
+    "cost_sheet_id": {
+      "title": "Cost Sheet Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_draftimage",
+  "type": "object"
+}
+
+Pydantic Model for Table order_exchange:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "deatils": {
+      "title": "Deatils",
+      "type": "string"
+    },
+    "Exchange_product_id": {
+      "title": "Exchange Product Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "services_id": {
+      "title": "Services Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_exchange",
+  "type": "object"
+}
+
+Pydantic Model for Table order_deliverytype:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Type": {
+      "title": "Type",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "title": "Order_deliverytype",
+  "type": "object"
+}
+
+Pydantic Model for Table order_purchase:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "purchase_number": {
+      "title": "Purchase Number",
+      "type": "string"
+    },
+    "reference": {
+      "title": "Reference",
+      "type": "string"
+    },
+    "delivery_method": {
+      "title": "Delivery Method",
+      "type": "string"
+    },
+    "delivery_date": {
+      "title": "Delivery Date",
+      "type": "string"
+    },
+    "Payment_method": {
+      "title": "Payment Method",
+      "type": "string"
+    },
+    "Account_no": {
+      "title": "Account No",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "bill": {
+      "title": "Bill",
+      "type": "string"
+    },
+    "due": {
+      "title": "Due",
+      "type": "string"
+    },
+    "discount": {
+      "title": "Discount",
+      "type": "string"
+    },
+    "costing": {
+      "title": "Costing",
+      "type": "string"
+    },
+    "shipping": {
+      "title": "Shipping",
+      "type": "string"
+    },
+    "payment": {
+      "title": "Payment",
+      "type": "string"
+    },
+    "adjustment": {
+      "title": "Adjustment",
+      "type": "string"
+    },
+    "is_received": {
+      "title": "Is Received",
+      "type": "string"
+    },
+    "received_item": {
+      "title": "Received Item",
+      "type": "string"
+    },
+    "received_item_price": {
+      "title": "Received Item Price",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "tax_type": {
+      "title": "Tax Type",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "employe_id": {
+      "title": "Employe Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "refund_id": {
+      "title": "Refund Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_purchase",
+  "type": "object"
+}
+
+Pydantic Model for Table order_invoice_payment:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "bill": {
+      "title": "Bill",
+      "type": "string"
+    },
+    "due": {
+      "title": "Due",
+      "type": "string"
+    },
+    "discount": {
+      "title": "Discount",
+      "type": "string"
+    },
+    "tax": {
+      "title": "Tax",
+      "type": "string"
+    },
+    "payment": {
+      "title": "Payment",
+      "type": "string"
+    },
+    "advance_payment": {
+      "title": "Advance Payment",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "Sales_person_id": {
+      "title": "Sales Person Id",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "refund": {
+      "title": "Refund",
+      "type": "string"
+    },
+    "receive": {
+      "title": "Receive",
+      "type": "string"
+    }
+  },
+  "title": "Order_invoice_payment",
+  "type": "object"
+}
+
+Pydantic Model for Table order_purchase_item:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "damage": {
+      "title": "Damage",
+      "type": "string"
+    },
+    "received": {
+      "title": "Received",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "landing_price": {
+      "title": "Landing Price",
+      "type": "string"
+    },
+    "discount": {
+      "title": "Discount",
+      "type": "string"
+    },
+    "tax": {
+      "title": "Tax",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "purchase_id": {
+      "title": "Purchase Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_purchase_item",
+  "type": "object"
+}
+
+Pydantic Model for Table order_draftcostsheet:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "style_name": {
+      "title": "Style Name",
+      "type": "string"
+    },
+    "client_name": {
+      "title": "Client Name",
+      "type": "string"
+    },
+    "style_code": {
+      "title": "Style Code",
+      "type": "string"
+    },
+    "designer_name": {
+      "title": "Designer Name",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "date": {
+      "title": "Date",
+      "type": "string"
+    },
+    "net_total_cost": {
+      "title": "Net Total Cost",
+      "type": "string"
+    },
+    "profit_percentage": {
+      "title": "Profit Percentage",
+      "type": "string"
+    },
+    "net_selling_price": {
+      "title": "Net Selling Price",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    }
+  },
+  "title": "Order_draftcostsheet",
+  "type": "object"
+}
+
+Pydantic Model for Table order_invoice:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "invoice_number": {
+      "title": "Invoice Number",
+      "type": "string"
+    },
+    "order_number": {
+      "title": "Order Number",
+      "type": "string"
+    },
+    "shipping_address": {
+      "title": "Shipping Address",
+      "type": "string"
+    },
+    "delivery_charge": {
+      "title": "Delivery Charge",
+      "type": "string"
+    },
+    "delivery_cost": {
+      "title": "Delivery Cost",
+      "type": "string"
+    },
+    "delivery_person": {
+      "title": "Delivery Person",
+      "type": "string"
+    },
+    "delivery_date": {
+      "title": "Delivery Date",
+      "type": "string"
+    },
+    "program_date": {
+      "title": "Program Date",
+      "type": "string"
+    },
+    "Payment_method": {
+      "title": "Payment Method",
+      "type": "string"
+    },
+    "Account_no": {
+      "title": "Account No",
+      "type": "string"
+    },
+    "Transection_no": {
+      "title": "Transection No",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "bill": {
+      "title": "Bill",
+      "type": "string"
+    },
+    "due": {
+      "title": "Due",
+      "type": "string"
+    },
+    "discount": {
+      "title": "Discount",
+      "type": "string"
+    },
+    "discountlimit": {
+      "title": "Discountlimit",
+      "type": "string"
+    },
+    "tax": {
+      "title": "Tax",
+      "type": "string"
+    },
+    "costing": {
+      "title": "Costing",
+      "type": "string"
+    },
+    "profit": {
+      "title": "Profit",
+      "type": "string"
+    },
+    "payment": {
+      "title": "Payment",
+      "type": "string"
+    },
+    "advance_payment": {
+      "title": "Advance Payment",
+      "type": "string"
+    },
+    "is_delivered": {
+      "title": "Is Delivered",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "Vat_issued_date": {
+      "title": "Vat Issued Date",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "address1": {
+      "title": "Address1",
+      "type": "string"
+    },
+    "address2": {
+      "title": "Address2",
+      "type": "string"
+    },
+    "country": {
+      "title": "Country",
+      "type": "string"
+    },
+    "district": {
+      "title": "District",
+      "type": "string"
+    },
+    "postalCode": {
+      "title": "Postalcode",
+      "type": "string"
+    },
+    "thana": {
+      "title": "Thana",
+      "type": "string"
+    },
+    "s_phone": {
+      "title": "S Phone",
+      "type": "string"
+    },
+    "shipping_method": {
+      "title": "Shipping Method",
+      "type": "string"
+    },
+    "DeliveryType_id": {
+      "title": "Deliverytype Id",
+      "type": "string"
+    },
+    "Sales_person_id": {
+      "title": "Sales Person Id",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "cupon_id": {
+      "title": "Cupon Id",
+      "type": "string"
+    },
+    "employe_id": {
+      "title": "Employe Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    },
+    "refund": {
+      "title": "Refund",
+      "type": "string"
+    },
+    "is_public": {
+      "title": "Is Public",
+      "type": "string"
+    },
+    "receive": {
+      "title": "Receive",
+      "type": "string"
+    },
+    "additional_discount": {
+      "title": "Additional Discount",
+      "type": "string"
+    }
+  },
+  "title": "Order_invoice",
+  "type": "object"
+}
+
+Pydantic Model for Table order_draftorder:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "cost_sheet_items": {
+      "title": "Cost Sheet Items",
+      "type": "string"
+    },
+    "draft_name": {
+      "title": "Draft Name",
+      "type": "string"
+    },
+    "unit_quantity": {
+      "title": "Unit Quantity",
+      "type": "string"
+    },
+    "unit_name": {
+      "title": "Unit Name",
+      "type": "string"
+    },
+    "unit_price": {
+      "title": "Unit Price",
+      "type": "string"
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "cost_sheet_id": {
+      "title": "Cost Sheet Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_draftorder",
+  "type": "object"
+}
+
+Pydantic Model for Table order_invoice_item:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "purchase_price": {
+      "title": "Purchase Price",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_invoice_item",
+  "type": "object"
+}
+
+Pydantic Model for Table order_measurement:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Blouse": {
+      "title": "Blouse",
+      "type": "string"
+    },
+    "Kameez": {
+      "title": "Kameez",
+      "type": "string"
+    },
+    "Gown": {
+      "title": "Gown",
+      "type": "string"
+    },
+    "Skirt": {
+      "title": "Skirt",
+      "type": "string"
+    },
+    "Paladzo": {
+      "title": "Paladzo",
+      "type": "string"
+    },
+    "Pant": {
+      "title": "Pant",
+      "type": "string"
+    },
+    "Gharara": {
+      "title": "Gharara",
+      "type": "string"
+    },
+    "Note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "Chest": {
+      "title": "Chest",
+      "type": "string"
+    },
+    "Waist": {
+      "title": "Waist",
+      "type": "string"
+    },
+    "Hand_opening": {
+      "title": "Hand Opening",
+      "type": "string"
+    },
+    "Hip": {
+      "title": "Hip",
+      "type": "string"
+    },
+    "Length": {
+      "title": "Length",
+      "type": "string"
+    },
+    "End": {
+      "title": "End",
+      "type": "string"
+    },
+    "Slit": {
+      "title": "Slit",
+      "type": "string"
+    },
+    "Shoulder": {
+      "title": "Shoulder",
+      "type": "string"
+    },
+    "Neck_deep_f": {
+      "title": "Neck Deep F",
+      "type": "string"
+    },
+    "Arm_hole": {
+      "title": "Arm Hole",
+      "type": "string"
+    },
+    "Neck_deep_b": {
+      "title": "Neck Deep B",
+      "type": "string"
+    },
+    "Sleeve_l": {
+      "title": "Sleeve L",
+      "type": "string"
+    },
+    "Half_body": {
+      "title": "Half Body",
+      "type": "string"
+    },
+    "Muscle": {
+      "title": "Muscle",
+      "type": "string"
+    },
+    "Length_bottom": {
+      "title": "Length Bottom",
+      "type": "string"
+    },
+    "Waist_bottom": {
+      "title": "Waist Bottom",
+      "type": "string"
+    },
+    "Hip_bottom": {
+      "title": "Hip Bottom",
+      "type": "string"
+    },
+    "Thigh": {
+      "title": "Thigh",
+      "type": "string"
+    },
+    "Knee": {
+      "title": "Knee",
+      "type": "string"
+    },
+    "Leg_openning": {
+      "title": "Leg Openning",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "is_basic": {
+      "title": "Is Basic",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "service_id": {
+      "title": "Service Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_measurement",
+  "type": "object"
+}
+
+Pydantic Model for Table order_refund:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "deatils": {
+      "title": "Deatils",
+      "type": "string"
+    }
+  },
+  "title": "Order_refund",
+  "type": "object"
+}
+
+Pydantic Model for Table order_wordrobe:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "wordrobe_number": {
+      "title": "Wordrobe Number",
+      "type": "string"
+    },
+    "reference": {
+      "title": "Reference",
+      "type": "string"
+    },
+    "company_name": {
+      "title": "Company Name",
+      "type": "string"
+    },
+    "registered_Address": {
+      "title": "Registered Address",
+      "type": "string"
+    },
+    "company_profile_link": {
+      "title": "Company Profile Link",
+      "type": "string"
+    },
+    "photographer_name": {
+      "title": "Photographer Name",
+      "type": "string"
+    },
+    "model_name": {
+      "title": "Model Name",
+      "type": "string"
+    },
+    "makeup_artist_name": {
+      "title": "Makeup Artist Name",
+      "type": "string"
+    },
+    "delivery_method": {
+      "title": "Delivery Method",
+      "type": "string"
+    },
+    "delivery_date": {
+      "title": "Delivery Date",
+      "type": "string"
+    },
+    "Payment_method": {
+      "title": "Payment Method",
+      "type": "string"
+    },
+    "Account_no": {
+      "title": "Account No",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    },
+    "product_cost": {
+      "title": "Product Cost",
+      "type": "string"
+    },
+    "rent": {
+      "title": "Rent",
+      "type": "string"
+    },
+    "payment": {
+      "title": "Payment",
+      "type": "string"
+    },
+    "due": {
+      "title": "Due",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "is_returned": {
+      "title": "Is Returned",
+      "type": "string"
+    },
+    "contact_id": {
+      "title": "Contact Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_wordrobe",
+  "type": "object"
+}
+
+Pydantic Model for Table order_wordrobe_item:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "is_returned": {
+      "title": "Is Returned",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "wordrobe_id": {
+      "title": "Wordrobe Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_wordrobe_item",
+  "type": "object"
+}
+
+Pydantic Model for Table product_attribute:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "slug": {
+      "title": "Slug",
+      "type": "string"
+    },
+    "context": {
+      "title": "Context",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    }
+  },
+  "title": "Product_attribute",
+  "type": "object"
+}
+
+Pydantic Model for Table product_barcodeprintlist:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "challan_number": {
+      "title": "Challan Number",
+      "type": "string"
+    },
+    "comments": {
+      "title": "Comments",
+      "type": "string"
+    },
+    "list_quantity": {
+      "title": "List Quantity",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "product_locations_id": {
+      "title": "Product Locations Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_barcodeprintlist",
+  "type": "object"
+}
+
+Pydantic Model for Table order_services:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "cost": {
+      "title": "Cost",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "profit": {
+      "title": "Profit",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "employe_id": {
+      "title": "Employe Id",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_services",
+  "type": "object"
+}
+
+Pydantic Model for Table product_category:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "slug": {
+      "title": "Slug",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "Category_parent_id": {
+      "title": "Category Parent Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_category",
+  "type": "object"
+}
+
+Pydantic Model for Table product_productimage:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "photo": {
+      "title": "Photo",
+      "type": "string"
+    },
+    "is_active": {
+      "title": "Is Active",
+      "type": "string"
+    },
+    "Color_id": {
+      "title": "Color Id",
+      "type": "string"
+    },
+    "ProductDetails_id": {
+      "title": "Productdetails Id",
+      "type": "string"
+    },
+    "ProductLocation_id": {
+      "title": "Productlocation Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_productimage",
+  "type": "object"
+}
+
+Pydantic Model for Table product_productlocation:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "Attribute_details": {
+      "title": "Attribute Details",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "purchase_price": {
+      "title": "Purchase Price",
+      "type": "string"
+    },
+    "selling_price": {
+      "title": "Selling Price",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "barcode": {
+      "title": "Barcode",
+      "type": "string"
+    },
+    "ProductDetails_id": {
+      "title": "Productdetails Id",
+      "type": "string"
+    },
+    "Warehouse_id": {
+      "title": "Warehouse Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_productlocation",
+  "type": "object"
+}
+
+Pydantic Model for Table product_attributeterm:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "slug": {
+      "title": "Slug",
+      "type": "string"
+    },
+    "context": {
+      "title": "Context",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "Attribute_id": {
+      "title": "Attribute Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_attributeterm",
+  "type": "object"
+}
+
+Pydantic Model for Table order_services_costing:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "cost": {
+      "title": "Cost",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "services_id": {
+      "title": "Services Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_services_costing",
+  "type": "object"
+}
+
+Pydantic Model for Table product_productlocation_Attributes:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "productlocation_id": {
+      "title": "Productlocation Id",
+      "type": "string"
+    },
+    "attributeterm_id": {
+      "title": "Attributeterm Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_productlocation_attributes",
+  "type": "object"
+}
+
+Pydantic Model for Table product_transfer_item:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "is_received": {
+      "title": "Is Received",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    },
+    "transfer_id": {
+      "title": "Transfer Id",
+      "type": "string"
+    },
+    "is_returned": {
+      "title": "Is Returned",
+      "type": "string"
+    }
+  },
+  "title": "Product_transfer_item",
+  "type": "object"
+}
+
+Pydantic Model for Table product_productlocationentry:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "ProductLocation_id": {
+      "title": "Productlocation Id",
+      "type": "string"
+    },
+    "remarks": {
+      "title": "Remarks",
+      "type": "string"
+    }
+  },
+  "title": "Product_productlocationentry",
+  "type": "object"
+}
+
+Pydantic Model for Table product_warehouse:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "logo": {
+      "title": "Logo",
+      "type": "string"
+    },
+    "logoWidth": {
+      "title": "Logowidth",
+      "type": "string"
+    },
+    "logoHeight": {
+      "title": "Logoheight",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "contact": {
+      "title": "Contact",
+      "type": "string"
+    },
+    "petty_cash": {
+      "title": "Petty Cash",
+      "type": "string"
+    },
+    "cash": {
+      "title": "Cash",
+      "type": "string"
+    },
+    "is_outlet": {
+      "title": "Is Outlet",
+      "type": "string"
+    },
+    "is_office": {
+      "title": "Is Office",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "Warehouse_parent_id": {
+      "title": "Warehouse Parent Id",
+      "type": "string"
+    }
+  },
+  "title": "Product_warehouse",
+  "type": "object"
+}
+
+Pydantic Model for Table software_settings_module:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "title": "Software_settings_module",
+  "type": "object"
+}
+
+Pydantic Model for Table software_settings_business_settings:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "logo": {
+      "title": "Logo",
+      "type": "string"
+    },
+    "signature": {
+      "title": "Signature",
+      "type": "string"
+    },
+    "wordrobe_terms": {
+      "title": "Wordrobe Terms",
+      "type": "string"
+    },
+    "invoice_terms": {
+      "title": "Invoice Terms",
+      "type": "string"
+    },
+    "challan_terms": {
+      "title": "Challan Terms",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    }
+  },
+  "title": "Software_settings_business_settings",
+  "type": "object"
+}
+
+Pydantic Model for Table userlog_userlog:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "action_type": {
+      "title": "Action Type",
+      "type": "string"
+    },
+    "action_data": {
+      "title": "Action Data",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "object_id": {
+      "title": "Object Id",
+      "type": "string"
+    },
+    "content_type_id": {
+      "title": "Content Type Id",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "title": "Userlog_userlog",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_account:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "type": {
+      "title": "Type",
+      "type": "string"
+    },
+    "details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "account_no": {
+      "title": "Account No",
+      "type": "string"
+    },
+    "cash": {
+      "title": "Cash",
+      "type": "string"
+    },
+    "txnCharge": {
+      "title": "Txncharge",
+      "type": "string"
+    },
+    "is_active": {
+      "title": "Is Active",
+      "type": "string"
+    },
+    "accountparent_id": {
+      "title": "Accountparent Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_account",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_office:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "logo": {
+      "title": "Logo",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "contact": {
+      "title": "Contact",
+      "type": "string"
+    },
+    "petty_cash": {
+      "title": "Petty Cash",
+      "type": "string"
+    },
+    "cash": {
+      "title": "Cash",
+      "type": "string"
+    },
+    "is_outlet": {
+      "title": "Is Outlet",
+      "type": "string"
+    },
+    "is_office": {
+      "title": "Is Office",
+      "type": "string"
+    },
+    "is_warehouse": {
+      "title": "Is Warehouse",
+      "type": "string"
+    },
+    "Company_id": {
+      "title": "Company Id",
+      "type": "string"
+    },
+    "OfficeLocation_id": {
+      "title": "Officelocation Id",
+      "type": "string"
+    },
+    "OfficeType_id": {
+      "title": "Officetype Id",
+      "type": "string"
+    },
+    "Office_parent_id": {
+      "title": "Office Parent Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_office",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_loan:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "loanAmount": {
+      "title": "Loanamount",
+      "type": "string"
+    },
+    "loanType": {
+      "title": "Loantype",
+      "type": "string"
+    },
+    "loanPayableMonths": {
+      "title": "Loanpayablemonths",
+      "type": "string"
+    },
+    "loanPayableAmount": {
+      "title": "Loanpayableamount",
+      "type": "string"
+    },
+    "loanStatus": {
+      "title": "Loanstatus",
+      "type": "string"
+    },
+    "loanPaymentStatus": {
+      "title": "Loanpaymentstatus",
+      "type": "string"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "payment_method_id": {
+      "title": "Payment Method Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_loan",
+  "type": "object"
+}
+
+Pydantic Model for Table product_productdetails:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "slug": {
+      "title": "Slug",
+      "type": "string"
+    },
+    "Short_description": {
+      "title": "Short Description",
+      "type": "string"
+    },
+    "tags": {
+      "title": "Tags",
+      "type": "string"
+    },
+    "stock_unit": {
+      "title": "Stock Unit",
+      "type": "string"
+    },
+    "stock_alart_amount": {
+      "title": "Stock Alart Amount",
+      "type": "string"
+    },
+    "height": {
+      "title": "Height",
+      "type": "string"
+    },
+    "width": {
+      "title": "Width",
+      "type": "string"
+    },
+    "weight": {
+      "title": "Weight",
+      "type": "string"
+    },
+    "discount_type": {
+      "title": "Discount Type",
+      "type": "string"
+    },
+    "discount": {
+      "title": "Discount",
+      "type": "string"
+    },
+    "tax": {
+      "title": "Tax",
+      "type": "string"
+    },
+    "is_active": {
+      "title": "Is Active",
+      "type": "string"
+    },
+    "product_code": {
+      "title": "Product Code",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "min_price": {
+      "title": "Min Price",
+      "type": "string"
+    },
+    "max_price": {
+      "title": "Max Price",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "Category_id": {
+      "title": "Category Id",
+      "type": "string"
+    },
+    "Merchandiser_id": {
+      "title": "Merchandiser Id",
+      "type": "string"
+    },
+    "Sub_Category_id": {
+      "title": "Sub Category Id",
+      "type": "string"
+    },
+    "product_discount": {
+      "title": "Product Discount",
+      "type": "string"
+    },
+    "product_discount_price": {
+      "title": "Product Discount Price",
+      "type": "string"
+    },
+    "product_discount_type": {
+      "title": "Product Discount Type",
+      "type": "string"
+    }
+  },
+  "title": "Product_productdetails",
+  "type": "object"
+}
+
+Pydantic Model for Table product_transfer:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "reference": {
+      "title": "Reference",
+      "type": "string"
+    },
+    "tansfer_number": {
+      "title": "Tansfer Number",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "deatils": {
+      "title": "Deatils",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "destance_id": {
+      "title": "Destance Id",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    }
+  },
+  "title": "Product_transfer",
+  "type": "object"
+}
+
+Pydantic Model for Table accounting_pettycash_transfer:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "cash_amount": {
+      "title": "Cash Amount",
+      "type": "string"
+    },
+    "pett_cash_amount": {
+      "title": "Pett Cash Amount",
+      "type": "string"
+    },
+    "collect_cash": {
+      "title": "Collect Cash",
+      "type": "string"
+    },
+    "add_cash": {
+      "title": "Add Cash",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "location_id": {
+      "title": "Location Id",
+      "type": "string"
+    }
+  },
+  "title": "Accounting_pettycash_transfer",
+  "type": "object"
+}
+
+Pydantic Model for Table auth_permission:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "content_type_id": {
+      "title": "Content Type Id",
+      "type": "string"
+    },
+    "codename": {
+      "title": "Codename",
+      "type": "string"
+    }
+  },
+  "title": "Auth_permission",
+  "type": "object"
+}
+
+Pydantic Model for Table auth_group_permissions:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "group_id": {
+      "title": "Group Id",
+      "type": "string"
+    },
+    "permission_id": {
+      "title": "Permission Id",
+      "type": "string"
+    }
+  },
+  "title": "Auth_group_permissions",
+  "type": "object"
+}
+
+Pydantic Model for Table authtoken_token:
+{
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "title": "Authtoken_token",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_company:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "GroupOfCompany_id": {
+      "title": "Groupofcompany Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_company",
+  "type": "object"
+}
+
+Pydantic Model for Table hrm_loanpayment:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "paidAmount": {
+      "title": "Paidamount",
+      "type": "string"
+    },
+    "paymentDate": {
+      "title": "Paymentdate",
+      "type": "string"
+    },
+    "created": {
+      "title": "Created",
+      "type": "string"
+    },
+    "modified": {
+      "title": "Modified",
+      "type": "string"
+    },
+    "employee_id": {
+      "title": "Employee Id",
+      "type": "string"
+    },
+    "loan_id": {
+      "title": "Loan Id",
+      "type": "string"
+    }
+  },
+  "title": "Hrm_loanpayment",
+  "type": "object"
+}
+
+Pydantic Model for Table software_settings_sub_module:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "module_id": {
+      "title": "Module Id",
+      "type": "string"
+    }
+  },
+  "title": "Software_settings_sub_module",
+  "type": "object"
+}
+
+Pydantic Model for Table order_invoice_item_copy:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "Details": {
+      "title": "Details",
+      "type": "string"
+    },
+    "quantity": {
+      "title": "Quantity",
+      "type": "string"
+    },
+    "price": {
+      "title": "Price",
+      "type": "string"
+    },
+    "purchase_price": {
+      "title": "Purchase Price",
+      "type": "string"
+    },
+    "data": {
+      "title": "Data",
+      "type": "string"
+    },
+    "is_exchanged": {
+      "title": "Is Exchanged",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "issue_date": {
+      "title": "Issue Date",
+      "type": "string"
+    },
+    "invoice_id": {
+      "title": "Invoice Id",
+      "type": "string"
+    },
+    "product_id": {
+      "title": "Product Id",
+      "type": "string"
+    }
+  },
+  "title": "Order_invoice_item_copy",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_service:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    }
+  },
+  "title": "Contact_service",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_serviceschedule:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "day_of_week": {
+      "title": "Day Of Week",
+      "type": "string"
+    },
+    "start_time": {
+      "title": "Start Time",
+      "type": "string"
+    },
+    "end_time": {
+      "title": "End Time",
+      "type": "string"
+    },
+    "service_id": {
+      "title": "Service Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_serviceschedule",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_review:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "rating": {
+      "title": "Rating",
+      "type": "string"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "type": "string"
+    },
+    "appointment_id": {
+      "title": "Appointment Id",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_review",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_notification:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "content": {
+      "title": "Content",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_notification",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_availability:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "day_of_week": {
+      "title": "Day Of Week",
+      "type": "string"
+    },
+    "start_time": {
+      "title": "Start Time",
+      "type": "string"
+    },
+    "end_time": {
+      "title": "End Time",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_availability",
+  "type": "object"
+}
+
+Pydantic Model for Table contact_appointment:
+{
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "start_time": {
+      "title": "Start Time",
+      "type": "string"
+    },
+    "end_time": {
+      "title": "End Time",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "service_id": {
+      "title": "Service Id",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    },
+    "date": {
+      "title": "Date",
+      "type": "string"
+    },
+    "schedule_id": {
+      "title": "Schedule Id",
+      "type": "string"
+    }
+  },
+  "title": "Contact_appointment",
+  "type": "object"
+}
+
+Training with AI...

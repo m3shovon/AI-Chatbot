@@ -15,11 +15,10 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_TOKEN = "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"  
 
 # Read schema from a saved file
-def load_schema(file_path="output.txt", relevant_table="invoice"):
+def load_schema(file_path="output.txt", relevant_table="productlocation"):
     try:
         with open(file_path, "r") as file:
             schema_lines = file.readlines()
-            # Extract only relevant table schema
             relevant_schema = []
             capture = False
             for line in schema_lines:
@@ -78,7 +77,6 @@ def generate_sql_from_groq(user_input, schema):
         response.raise_for_status()
 
         data = response.json()
-        # Extract SQL query from response
         sql_query = data.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
         if sql_query.lower().startswith("select"):
             return sql_query
@@ -88,11 +86,11 @@ def generate_sql_from_groq(user_input, schema):
     except requests.exceptions.RequestException as e:
         return f"Error communicating with Groq API: {e}"
 
-# Execute the SQL query against the database
+# Execute the SQL query 
 def fetch_data_from_db(query):
     try:
         if query.startswith("Error:"):
-            return query  # Return the error message directly
+            return query  
         connection = psycopg2.connect(**DB_CONFIG)
         cursor = connection.cursor()
         cursor.execute(query)

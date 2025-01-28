@@ -96,3 +96,8 @@ tiktoken
 
 transformers 
 torch
+llama-index
+
+
+pip install sqlalchemy pydantic langchain openai psycopg2
+pip install langchain-community
