@@ -40,10 +40,10 @@ class AIAgent:
         """Search for products in the database with advanced query handling"""
         with self.engine.connect() as connection:
             try:
-                # Print debug information
+                # debug info
                 print(f"Searching for: {query}")
                 
-                # Make the search case-insensitive and exact for product codes
+                # search case-insensitive and exact for product codes
                 stmt = select(self.products_table).where(
                     (func.lower(self.products_table.c.product_code) == func.lower(query)) |
                     (func.lower(self.products_table.c.product_code).like(f'%{query.lower()}%')) |
@@ -57,7 +57,6 @@ class AIAgent:
                 # Print debug information
                 print(f"Found {len(results)} results")
                 if len(results) == 0:
-                    # Let's see what product codes exist in the database
                     check_stmt = select(self.products_table.c.product_code).limit(5)
                     sample_codes = connection.execute(check_stmt).fetchall()
                     print("Sample product codes in database:", [code[0] for code in sample_codes])
